@@ -28,7 +28,7 @@
                 <button
                     type="button"
                     class="btn btn-sem2 btn-xs"
-                    ng-click="goToAllOperations()"
+                    ng-click="goToAllOperations($event)"
                     ng-disabled="!docUnit || !docUnit.identifier"
                     uib-tooltip="{{::'Détails' | translate}}"
                     tooltip-append-to-body="true"
@@ -303,7 +303,7 @@
                                                 <button
                                                     type="button"
                                                     class="btn btn-sem2 btn-xs"
-                                                    ng-click="goToAllOperations('CHECK')"
+                                                    ng-click="goToAllOperations($event, 'CHECK')"
                                                     ng-disabled="!docUnit || !docUnit.identifier || !loaded"
                                                     uib-tooltip="{{::'Voir le document' | translate}}"
                                                 >
