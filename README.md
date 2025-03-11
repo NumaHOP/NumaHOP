@@ -1,4 +1,4 @@
-# NumaHOP 
+# NumaHOP
 
 > This repository is not the official repository for NumaHOP. This is the repository used by BibLibre for their developpements.
 
@@ -37,7 +37,7 @@ NumaHOP is also able to be shared between establishments and allows to make conj
 NumaHOP is a fullstack Java Spring boot and angular-js application built with maven and gruntjs.
 It uses Mariadb and elasticsearch8.
 
-Dependency list:
+Run time dependency list:
 - OpenJdk17
 - Mariadb 
 - ElasticSearch 8.*
@@ -46,9 +46,10 @@ Dependency list:
 - Exiftool
 - libyaz4 (optional)
 
-Build dependency list:
+Build dependency list (optinal but recommended for optimal developpement):
 - maven (optional)
 - gnumake (optional)
+- npm (optional)
 
 The installation manual can be found at this url: https://biblibre.github.io/NumaHOP-doc/install/index.html
 

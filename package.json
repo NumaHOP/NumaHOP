@@ -4,10 +4,10 @@
     "private": true,
     "scripts": {
         "check": "prettier --check \"{,src/**/,webpack/}*.{md,json,yml,html,cjs,mjs,js,ts,tsx,css,scss,xml}\"",
+        "doc": "jsdoc src/main/webapp/scripts -r -c .jsdoc.json -d target/jsdoc",
         "format": "prettier --write \"{,src/**/,webpack/}*.{md,json,yml,html,cjs,mjs,js,ts,tsx,css,scss,xml}\"",
         "lint": "eslint src/main/webapp/scripts",
         "lint-fix": "eslint --fix src/main/webapp/scripts",
-        "doc": "jsdoc src/main/webapp/scripts -r -c .jsdoc.json -d target/jsdoc",
         "prepare": "husky install",
         "start": "grunt server",
         "test": "grunt test"
