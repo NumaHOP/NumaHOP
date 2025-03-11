@@ -7,6 +7,7 @@
         "format": "prettier --write \"{,src/**/,webpack/}*.{md,json,yml,html,cjs,mjs,js,ts,tsx,css,scss,xml}\"",
         "lint": "node_modules/.bin/eslint src/main/webapp/scripts",
         "lint-fix": "node_modules/.bin/eslint --fix src/main/webapp/scripts",
+        "doc": "node_modules/.bin/jsdoc src/main/webapp/scripts -r -c .jsdoc.json -d target/jsdoc",
         "prepare": "husky install",
         "start": "grunt server",
         "test": "grunt test"
@@ -111,6 +112,7 @@
         "grunt-wiredep": "3.0.1",
         "husky": "8.0.1",
         "jasmine-core": "4.4.0",
+        "jsdoc": "^4.0.4",
         "jshint-stylish": "2.2.1",
         "load-grunt-tasks": "5.1.0",
         "lodash": "4.17.21",

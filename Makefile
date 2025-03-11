@@ -84,13 +84,14 @@ fmt:
 	npm run format
 
 build-docs:
-	$(call mvn_cmd_pattern,javadoc:javadoc,)
+	$(call mvn_cmd_pattern,javadoc:aggregate,)
+	npm run doc
 
 setup-docker:
 	docker build -t $(docker_run_img_name) $(docker_base_img_build_dir) --target run
 
 #############################################
-# ================= HACK ================= #
+# ================= HACK ================== #
 #############################################
 
 # Allow to ignore rule dependency failure by adding - before the rule name
