@@ -81,7 +81,7 @@ Then, we can annotate codes within the controller as member functions of MyContr
 
 ### Specification.
 
-The api of NumaHOP should respect the Open-Api v3.1 specification.
+The api of NumaHOP must respect the [Open-Api v3.1 specification](https://spec.openapis.org/oas/v3.1.1.html).
 
 ### Route request Handlers.
 
