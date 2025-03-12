@@ -1,0 +1,157 @@
+# How to contribute to NumaHOP.
+
+## Did you find a bug ?
+
+- Do not open an issue if the bug is a security vulnerability in our dependencies.
+- Ensure the bug was not already reported by searching the [issues](https://github.com/biblibre/NumaHOP-code/issues).
+- If your unable to find an open issue addressing the problem, [open a new one](https://github.com/biblibre/NumaHOP-code/issues/new).
+Be sure to include a **title and clear description** with as much relevant information as possible.
+
+## Are you writing a patch ?
+
+- Fork the repository and create a new branch with a desciptive name for the patch you plan on submitting.
+- Develop your patch folowing the coding guidelines.
+- Open a new pull request with the patch.
+- Ensure the PR description clearly descibes the solution. Include the issue number if applicable.
+- Before submitting for review please ensure the content of the PR comforms to the coding guidelines.
+
+# Coding guidelines.
+
+## File organization
+Files are organized 
+
+In the backend files are separated in 3 major fonctional folders:
+- repository: Classes that abstract over data storage methods 
+- services: Class containing the buissiness logic.
+- web: Classes defining the api.
+
+Some other notable locations:
+- config: Configuration classes.
+- domain: Classes containing the DataClasses and their Data Transfer Object (DTO). 
+
+## Java
+
+### Prefer `Optional` over  `null`.
+
+`null` is error prone and unclear. When seeing the signature of a function it is not immediatly clear if the result can be `null` 
+for this reason prefer the use of `Optional` when possible. 
+If not possible please annotate the argument or parameter with the `@Nullable` anotation.
+
+### Code Comments
+
+Each java method in a class should be documented using javadoc comments `\** *\` at the exeption of the api handlers these sould be commented using the swagger annotations.
+
+## HTML/CSS/JS
+### Code Comments
+
+In javascript files that defines any new angular module, use this kind of comment
+```js
+/**
+ * @class NumaHOP.MyModule
+ * @memberOf NumaHOP
+ */
+```
+
+For each angularjs service, use the following comment:
+```js
+/**
+ * @function myService
+ * @memberOf NumaHOP.MyModule
+ * @description This is an angularjs service.
+ */
+```
+If I have quite long codes in a controller or directive of MyModule and want to have a separate html file to document it, I will annotate the controller or directive as a class using full path. e.g.
+```js
+/**
+ * @class angular_module.MyModule.MyController
+ */
+```
+
+Then, we can annotate codes within the controller as member functions of MyController.
+```js
+/**
+ * @name $scope.aScopeFunction
+ * @function
+ * @memberOf angular_module.MyModule.MyController
+ * @description
+ */
+```
+
+## Api
+
+### Specification.
+
+The api of NumaHOP should respect the Open-Api v3.1 specification.
+
+### Route request Handlers.
+
+On handlers prefer the use of the methods mapping (eg: `@GetMapping`) instead of the more verbose `@RequestMapping`.
+
+There can only be 1 handler per methods on each routes.
+For example this is disalowed:
+```java
+@RequestMapping("/api/rest/user")
+class UserController {
+    
+    @GetMapping
+    fn getCurrentUser() {
+        // ...
+    }
+
+    @GetMapping(params = {"id"})
+    fn getUser(@QueryParam String id) {
+        // ...
+    }
+}
+```
+
+Minimize the number of different routes for one controller.
+If a route has the 3 methods folowing defined it should have its own class:
+- POST (creation)
+- GET (fetching)
+- DELETE (suppression)
+
+If not it can be located in its parent class.
+
+Disalowed:
+```java
+@RequestMapping("/api/rest/user")
+class UserController {
+    
+    /* ... /api/rest/user handlers  */
+
+    @GetMapping("/profile")
+    fn getUserProfile() { /* ... */ }
+
+    @PostMapping("/profile")
+    fn createUserProfile() { /* ... */ }
+
+    @DeleteMapping("/profile")
+    fn deleteUserProfile() { /* ... */ }
+
+    @PutMapping("/profile")
+    fn updateUserProfile() { /* ... */ }
+}
+```
+Intead a `UserProfileController` class shoud be created.
+
+Allowed:
+```java
+@RequestMapping("/api/rest/user")
+class UserController {
+    /* ... /api/rest/user handlers */
+
+    @GetMapping("/search")
+    fn searchUsers() { /* ... */ }
+}
+```
+
+Similarly in the front-end each back-end controller must have a matching `$ressource` call. 
+With the definition of the route, method, and query parameters.
+
+## Commits 
+
+General rule: if you submit code that fixes previous code that violates those
+guidelines do a separate commit for the fix and the coding guidelines corrections.
+Similarly speparate the formating of the code and the fixes in separate
+commits. This facilitate the reviewing of the merge request.
