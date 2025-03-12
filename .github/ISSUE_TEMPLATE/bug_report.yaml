@@ -1,8 +1,7 @@
 name: 🐞 Bug
 description: File a bug report.
 title: "[🐞Bug]: "
-labels: ["bug", "triage"]
-assignees:
+labels: ["Bug", "Triage"]
 body:
   - type: checkboxes
     attributes:
