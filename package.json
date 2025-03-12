@@ -3,9 +3,9 @@
     "version": "0.0.1",
     "private": true,
     "scripts": {
-        "check": "prettier --check \"{,src/**/,webpack/}*.{md,json,yml,html,cjs,mjs,js,ts,tsx,css,scss,xml}\"",
+        "check": "prettier --check \"{,src/**/,webpack/}*.{json,yml,html,cjs,mjs,js,ts,tsx,css,scss,xml}\"",
         "doc": "jsdoc src/main/webapp/scripts -r -c .jsdoc.json -d target/jsdoc",
-        "format": "prettier --write \"{,src/**/,webpack/}*.{md,json,yml,html,cjs,mjs,js,ts,tsx,css,scss,xml}\"",
+        "format": "prettier --write \"{,src/**/,webpack/}*.{json,yml,html,cjs,mjs,js,ts,tsx,css,scss,xml}\"",
         "lint": "eslint src/main/webapp/scripts",
         "lint-fix": "eslint --fix src/main/webapp/scripts",
         "prepare": "husky install",
