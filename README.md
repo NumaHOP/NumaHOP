@@ -46,7 +46,7 @@ Run time dependency list:
 - Exiftool
 - libyaz4 (optional)
 
-Build dependency list (optinal but recommended for optimal developpement):
+Build dependency list (optional but recommended for optimal developpement):
 - maven (optional)
 - gnumake (optional)
 - npm (optional)
