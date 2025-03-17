@@ -7,7 +7,7 @@
      * @name MainController
      * @description TODO
      */
-    var MainController = function() {};
+    var MainController = function () {};
     angular.module('numaHopApp.controller').controller('MainController', MainController);
 
     /**
@@ -20,7 +20,7 @@
      * @param SearchSrvc {service}
      * @description TODO
      */
-    var GlobalSearchController =  function ($location, $route, $timeout, SearchSrvc) {
+    var GlobalSearchController = function ($location, $route, $timeout, SearchSrvc) {
         var globalCtrl = this;
         globalCtrl.onListSelection = onListSelection;
         globalCtrl.search = search;
@@ -76,7 +76,6 @@
         }
     };
     angular.module('numaHopApp.controller').controller('GlobalSearchController', GlobalSearchController);
-
 
     /**
      * @memberof numaHopApp
