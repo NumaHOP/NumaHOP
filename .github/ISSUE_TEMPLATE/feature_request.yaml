@@ -1,0 +1,38 @@
+name:  Feature request.
+description: Submit a feature request.
+title: "[ Feature request]: "
+labels: ["Enhancement", "Triage"]
+body:
+  - type: checkboxes
+    attributes:
+      label: Is there another existing issue for this?
+      description: Please search to see if an issue already exists.
+      options:
+      - label: I have searched the existing issues
+        required: true
+      - label: This isn't a bug. (It's a bug if something isn't working as intended)
+        required: true
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this feature request !
+  - type: textarea
+    attributes:
+      label: Current or Missing Behavior
+      description: A concise description of what is missing or limiting your usage.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: New Behavior
+      description: A concise description of what you would want to happen.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Anything else?
+      description: |
+        Links? References? Anything that will give us more context!
+        Tip: You can attach images by clicking this area to highlight it and then dragging files in.
+    validations:
+      required: false
