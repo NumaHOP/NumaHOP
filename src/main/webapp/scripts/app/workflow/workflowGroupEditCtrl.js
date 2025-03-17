@@ -3,6 +3,12 @@
 
     angular.module('numaHopApp.controller').controller('WorkflowGroupEditCtrl', WorkflowGroupEditCtrl);
 
+    /**
+     * @memberof numaHopApp
+     * @ngdoc controller
+     * @name WorkflowGroupEditCtrl
+     * @desc TODO
+     */
     function WorkflowGroupEditCtrl(
         $location,
         $q,

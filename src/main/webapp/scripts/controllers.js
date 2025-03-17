@@ -1,19 +1,48 @@
 (function () {
     'use strict';
 
-    /* Controllers */
-    angular.module('numaHopApp.controller').controller('MainController', function () {});
+    /**
+     * @memberof numaHopApp
+     * @ngdoc controller
+     * @name MainController
+     * @description TODO
+     */
+    var MainController = function() {};
+    angular.module('numaHopApp.controller').controller('MainController', MainController);
 
-    angular.module('numaHopApp.controller').controller('GlobalSearchController', function ($location, $route, $timeout, SearchSrvc) {
+    /**
+     * @memberof numaHopApp
+     * @ngdoc controller
+     * @name GlobalSearchController
+     * @param location {service}
+     * @param route {service}
+     * @param timeout {service}
+     * @param SearchSrvc {service}
+     * @description TODO
+     */
+    var GlobalSearchController =  function ($location, $route, $timeout, SearchSrvc) {
         var globalCtrl = this;
         globalCtrl.onListSelection = onListSelection;
         globalCtrl.search = search;
         globalCtrl.suggestions = suggestions;
 
+        /**
+         * @memberof GlobalSearchController
+         * @function suggestions
+         * @param {string} text
+         * @description TODO
+         */
         function suggestions(text) {
             return SearchSrvc.query({ suggest: text }).$promise;
         }
 
+        /**
+         * @memberof GlobalSearchController
+         * @function search
+         * @param {string} text
+         * @param {Event} event
+         * @description TODO
+         */
         function search(searchText, event) {
             if (event && event.type === 'keypress' && event.keyCode !== 13) {
                 return;
@@ -32,10 +61,12 @@
         }
 
         /**
-         * L'utilisateur appuie sur "entrée" alors que la souris survole un élément de la liste déroulante du composant typeahead:
+         * @memberof GlobalSearchController
+         * @function onListSelection
+         * @param {*} event
+         * @description L'utilisateur appuie sur "entrée" alors que la souris survole un élément de la liste déroulante du composant typeahead:
          * on ne veut pas du comportement par défaut, qui consiste à recherche l'élément survolé,
          * mais plutôt lancer la recherche sur la saisie de l'utilisateur dans le champ de recherche.
-         * @param {*} event
          */
         function onListSelection(event) {
             if (event && event.type === 'keydown' && event.keyCode === 13) {
@@ -43,15 +74,38 @@
             }
             return false; // pas de sélection dans la liste déroulante des suggestions de recherche
         }
-    });
+    };
+    angular.module('numaHopApp.controller').controller('GlobalSearchController', GlobalSearchController);
 
-    angular.module('numaHopApp.controller').controller('LanguageController', function ($window, $scope, CONFIGURATION, LocaleService, UserSrvc) {
+
+    /**
+     * @memberof numaHopApp
+     * @ngdoc controller
+     * @name LanguageController
+     * @param {service} window
+     * @param {service} scope
+     * @param {service} CONFIGURATION
+     * @param {service} LocaleService
+     * @param {service} UserSrvc
+     * @description TODO
+     */
+    var LanguageController = function ($window, $scope, CONFIGURATION, LocaleService, UserSrvc) {
+        /**
+         * @function changeLocale
+         * @scope {}
+         * @description TODO
+         */
         $scope.changeLocale = function (locale) {
             LocaleService.changeLocale(locale);
             $window.location.reload();
         };
+        /**
+         * @property {Array} locales
+         * @description TODO
+         */
         $scope.locales = CONFIGURATION.numahop.locales;
-    });
+    };
+    angular.module('numaHopApp.controller').controller('LanguageController', LanguageController);
 
     angular.module('numaHopApp.controller').controller('LoginController', function ($scope, $http, $location, $window, AuthenticationSharedService, gettext, gettextCatalog) {
         $scope.setForgotPassword = setForgotPassword;

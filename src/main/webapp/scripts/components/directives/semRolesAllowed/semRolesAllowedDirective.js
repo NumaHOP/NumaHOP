@@ -2,19 +2,20 @@
     'use strict';
 
     /**
+     * @memberof numaHopApp
      * @ngdoc directive
      * @name semRolesAllowed
      * @priority 1000
      *
      * @description
      * Définit la liste de rôles autorisés à visualiser l'élément courant (à partir de USER_ROLES)
-     * sem-roles-allowed="UC80_HAB1_W, UC80_HAB1_W" est l'écriture simplifiée de: ng-if="isAuthorized([userRoles.UC80_HAB1_W, userRoles.UC80_HAB2_W])",
-     * avec en plus un contrôle de l'existence des habilitations saisies dans USER_ROLES
+     * `sem-roles-allowed="UC80_HAB1_W, UC80_HAB1_W"` est l'écriture simplifiée de `ng-if="isAuthorized([userRoles.UC80_HAB1_W, userRoles.UC80_HAB2_W])"`,
+     * avec en plus un contrôle de l'existence des habilitations saisies dans `USER_ROLES`
      *
      * @example
-       <example>
-         <div id="controls" sem-roles-allowed=""></div>
-       </example>
+     * <example>
+     *   <div id="controls" sem-roles-allowed=""></div>
+     * </example>
      */
     angular.module('numaHopApp.directive').directive('semRolesAllowed', function ($compile, $log, USER_ROLES) {
         return {

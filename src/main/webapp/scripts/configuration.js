@@ -72,7 +72,12 @@
         ChartJsProvider.setOptions({ global: { colors: ["#c92a2a", "#e8590c", "#f59f00", "#fcc419", "#ffe066", "#fff3bf", "#fff9db"] } });
     }); */
 
-    /** Rôles * */
+    /**
+     * @memberof numaHopApp
+     * @ngdoc constant
+     * @name USER_ROLES
+     * @description TODO
+     */
     angular.module('numaHopApp').constant('USER_ROLES', {
         all: '*',
         // LOT
