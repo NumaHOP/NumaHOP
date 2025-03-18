@@ -13,9 +13,23 @@ Be sure to include a **title and clear description** with as much relevant infor
 - Develop your patch folowing the coding guidelines.
 - Open a new pull request with the patch.
 - Ensure the PR description clearly descibes the solution. Include the issue number if applicable.
-- Before submitting for review please ensure the content of the PR comforms to the coding guidelines.
+- Before submitting for review please ensure the content of the PR comforms to the coding guidelines and make sure the `make checks` command succeeds.
+
+### Commits 
+
+General rule: if you submit code that fixes previous code that violates those
+guidelines on top of your fix. Do a separate commit for the fix and the coding guidelines corrections.
+Similarly speparate the formating of the code and the fixes in separate
+commits. This facilitate the reviewing of the merge request.
 
 # Coding guidelines.
+
+## Coding guideline violations.
+
+If you find coding guidelines violations in the source code you can submit an issue with the tag:
+`Coding Guidelines violation`. These issues are not urgent and will not be
+included in the milestones. However These are often good first issues to get
+familiar with the codebase.
 
 ## File organization
 Files are organized 
@@ -149,9 +163,3 @@ class UserController {
 Similarly in the front-end each back-end controller must have a matching `$ressource` call. 
 With the definition of the route, method, and query parameters.
 
-## Commits 
-
-General rule: if you submit code that fixes previous code that violates those
-guidelines do a separate commit for the fix and the coding guidelines corrections.
-Similarly speparate the formating of the code and the fixes in separate
-commits. This facilitate the reviewing of the merge request.
