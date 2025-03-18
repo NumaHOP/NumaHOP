@@ -38,7 +38,7 @@ build-docs:
 	npm run doc
 
 setup:
-	npm run install --legacy-peer-deps
+	npm ci --legacy-peer-deps
 
 setup-docker:
 	docker build -t $(docker_run_img_name) $(docker_base_img_build_dir) --target run
