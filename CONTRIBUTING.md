@@ -75,39 +75,63 @@ If not possible please annotate the argument or parameter with the `@Nullable` a
 Each java method in a class should be documented using javadoc comments `\** *\` at the exeption of the api handlers these sould be commented using the swagger annotations.
 
 ## HTML/CSS/JS
-### Code Comments
+### (Front-Ent 1) Code Comments
 
 In javascript files that defines any new angular module, use this kind of comment
 ```js
 /**
- * @class NumaHOP.MyModule
  * @memberOf NumaHOP
+ * @class NumaHOP.MyModule
  */
 ```
 
-For each angularjs service, use the following comment:
+For each angularjs service, controller, filter or directive, use the following comment replacing service by any of the previously mentioned 
+item:
 ```js
 /**
- * @function myService
  * @memberOf NumaHOP.MyModule
- * @description This is an angularjs service.
+ * @ngdoc service
+ * @name MyService
+ * @ngInject //Document the injected angular js services.
+ * @description This is my angularjs service.
  */
-```
-If I have quite long codes in a controller or directive of MyModule and want to have a separate html file to document it, I will annotate the controller or directive as a class using full path. e.g.
-```js
-/**
- * @class angular_module.MyModule.MyController
- */
+ function myAngularObject($http) {
+
+ }
+ angular.module('NumaHOP.MyModule').service('myService', myService);
 ```
 
-Then, we can annotate codes within the controller as member functions of MyController.
+Similarly for a controller use:
 ```js
 /**
- * @name $scope.aScopeFunction
- * @function
- * @memberOf angular_module.MyModule.MyController
- * @description
+ * @memberOf NumaHOP.MyModule
+ * @ngdoc controller 
+ * @name myController
+ * @ngInject //Document the injected angular js services.
+ * @description This is my angularjs controller.
  */
+ function myController($http) {
+
+ }
+ angular.module('NumaHOP.MyModule').service('myService', myService);
+```
+
+To document a function
+```js
+/**
+ * @property a
+ */
+var obj = {};
+
+/**
+ * @memberOf NumaHOP.MyModule.My{Controller/Service/Directive}
+ * @func myFunction
+ * @description This is my angularjs service.
+ * @param a
+ */
+function myFunction(a) {
+    ...
+}
 ```
 
 ## Api
