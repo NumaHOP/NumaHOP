@@ -64,13 +64,13 @@ src
 
 ## Java
 
-### Prefer `Optional` over  `null`.
+### (JAVA 1) Prefer `Optional` over  `null`.
 
 `null` is error prone and unclear. When seeing the signature of a function it is not immediatly clear if the result can be `null` 
 for this reason prefer the use of `Optional` when possible. 
 If not possible please annotate the argument or parameter with the `@Nullable` anotation.
 
-### Code Comments
+### (JAVA 2) Code Comments
 
 Each java method in a class should be documented using javadoc comments `\** *\` at the exeption of the api handlers these sould be commented using the swagger annotations.
 
