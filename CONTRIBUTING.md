@@ -2,10 +2,29 @@
 
 ## Did you find a bug ?
 
-- Do not open an issue if the bug is a security vulnerability in our dependencies.
-- Ensure the bug was not already reported by searching the [issues](https://github.com/biblibre/NumaHOP-code/issues).
-- If your unable to find an open issue addressing the problem, [open a new one](https://github.com/biblibre/NumaHOP-code/issues/new).
-Be sure to include a **title and clear description** with as much relevant information as possible.
+> Do not open an issue if the bug is a security vulnerability in our dependencies. We have automatic dependencies report provided by github in the security tab. But if the vulnerability is in the NumaHOP code itself please do
+
+Before submitting a bug report ensure the bug was not already reported by
+searching the [issues](https://github.com/biblibre/NumaHOP-code/issues). If you
+find an issue that describe the same bug, you can add a comment descibing your
+situation and add more context information.
+
+If your unable to find an open issue addressing the problem, [open a new one](https://github.com/biblibre/NumaHOP-code/issues/new).
+Be sure to include a clear **title** with as much relevant information as possible. For example `Creation of duplicate document units while importing csv notices.` is good descriptive title while `Import didn't work as expected` is too vague.
+The more information you provide the greater the likelyhood of the bug being fixed is.
+
+The bug report formular should ask you the folowing information:
+- A desciption of what you wanted to do and/or expected to happen:
+- A desciption of what happened with potential error messages (from the front-end) or screen shots.
+- Steps to reproduce: A list of steps that allows you to see the bug in action.
+- Browser used: Usefull to know wich browser was used to access NumaHOP.
+
+### Issue lifecycle. 
+
+Just after the bug report was created the issue has the label `Triage` which means that it was not reviewed by a developper and needs to be evaluated. Once the issue was reviewed if the bug report is too vague it will be labeled as `Needs more info`. If we can't reproduce the bug in any shape or form it will be marked as `Won't fix`. If the bug is easy to fix and relatively straight forward it will recieve the `Good first issue`. These are good issues to tackle for new contributors.
+If a contributor managed to reproduce your bug the report will recieve the `Reproduced` label and your bug is elligible to a patch.
+Then a contributor might develop a patch resolving your bug and make a pull request for it mentioning the bug report issue number.
+Finally when the issue is merged it will recieve the `Fixed` label and the issue will be closed.
 
 ## Are you writing a patch ?
 
