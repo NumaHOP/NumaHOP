@@ -52,7 +52,7 @@ fixed. Include the issue number if applicable.
 the coding guidelines and make sure the `make checks` command succeeds when
 applicable.
 
-### Commits 
+### Commits & Commit messages
 
 > General rule: separate formatting and adapting to coding guidelines from the
 contribution itself. 
@@ -62,6 +62,10 @@ formatting in a separate commit. If the part of the code you are modifying does
 not follow the coding guidelines, try to adapt the code to follow those in a
 separate commit (not always possible). Then, add the commit with the fix
 itself. This facilitate the reviewing of the merge request a lot.
+
+In the commit message where the fix is situated please include a test plan for
+the fix. This makes the review process a lot quicker and easier for the
+reviewer.
 
 # Coding guidelines.
 
