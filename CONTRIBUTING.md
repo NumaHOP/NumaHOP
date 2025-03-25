@@ -136,11 +136,11 @@ function myFunction(a) {
 
 ## Api
 
-### Specification.
+### (API 1) Specification.
 
 The api of NumaHOP must respect the [Open-Api v3.1 specification](https://spec.openapis.org/oas/v3.1.1.html).
 
-### Route request Handlers.
+### (API 2) Route request Handlers.
 
 On handlers prefer the use of the methods mapping (eg: `@GetMapping`) instead of the more verbose `@RequestMapping`.
 
@@ -162,12 +162,29 @@ class UserController {
 }
 ```
 
+Intead use a route parameter:
+```java
+@RequestMapping("/api/rest/user")
+class UserController {
+    
+    @GetMapping
+    fn getCurrentUser() {
+        // ...
+    }
+
+    @GetMapping("/{id}")
+    fn getUser(@PathVariable String id) {
+        // ...
+    }
+}
+```
+
 Minimize the number of different routes for one controller.
-If a route has the 3 methods folowing defined it should have its own class:
+If a route has the 4 methods folowing defined it should have its own class:
 - POST (creation)
 - GET (fetching)
 - DELETE (suppression)
-
+- PUT (update)
 If not it can be located in its parent class.
 
 Disalowed:
@@ -196,6 +213,7 @@ Allowed:
 ```java
 @RequestMapping("/api/rest/user")
 class UserController {
+
     /* ... /api/rest/user handlers */
 
     @GetMapping("/search")
@@ -203,6 +221,22 @@ class UserController {
 }
 ```
 
+### (API 3) Front-end api usage.
+
 Similarly in the front-end each back-end controller must have a matching `$ressource` call. 
 With the definition of the route, method, and query parameters.
 
+Due to how angularjs auto generates the handlers, these are the route expected in the api: 
+| method | url             | meaning   |
+| ------ | --------------- | --------- |
+| POST   | `/<object>`     | create    |
+| GET    | `/<object>`     | list      |
+| GET    | `/<object>/:id` | get by id |
+| DELETE | `/<object>/:id` | delete    |
+| POST   | `/<object>/:id` | update    |
+
+Any other routes should be on another handler. A few examples:
+| method | url                    | meaning                      |
+| ------ | ---------------------- | ---------------------------- |
+| GET    | `/<object>/search?...` | a search with filters        |
+| POST   | `/<object>/task`       | perform a task on the object |
