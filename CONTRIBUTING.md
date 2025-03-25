@@ -6,40 +6,45 @@
 
 Before submitting a bug report ensure the bug was not already reported by
 searching the [issues](https://github.com/biblibre/NumaHOP-code/issues). If you
-find an issue that describe the same bug, you can add a comment descibing your
+find an issue that describe the same bug, you can add a comment describing your
 situation and add more context information.
 
 If your unable to find an open issue addressing the problem, [open a new one](https://github.com/biblibre/NumaHOP-code/issues/new).
 Be sure to include a clear **title** with as much relevant information as possible. For example `Creation of duplicate document units while importing csv notices.` is good descriptive title while `Import didn't work as expected` is too vague.
-The more information you provide the greater the likelyhood of the bug being fixed is.
+The more information you provide the greater the likelihood of the bug being fixed is.
 
-The bug report formular should ask you the folowing information:
-- A desciption of what you wanted to do and/or expected to happen:
-- A desciption of what happened with potential error messages (from the front-end) or screen shots.
+The bug report form should ask you the following information:
+- A description of what you wanted to do and/or expected to happen:
+- A description of what happened with potential error messages (from the front-end) or screen shots.
 - Steps to reproduce: A list of steps that allows you to see the bug in action.
-- Browser used: Usefull to know wich browser was used to access NumaHOP.
+- Browser used: Useful to know which browser was used to access NumaHOP.
 
-### Issue lifecycle. 
+### Issue life cycle. 
 
-Just after the bug report was created the issue has the label `Triage` which means that it was not reviewed by a developper and needs to be evaluated. Once the issue was reviewed if the bug report is too vague it will be labeled as `Needs more info`. If we can't reproduce the bug in any shape or form it will be marked as `Won't fix`. If the bug is easy to fix and relatively straight forward it will recieve the `Good first issue`. These are good issues to tackle for new contributors.
-If a contributor managed to reproduce your bug the report will recieve the `Reproduced` label and your bug is elligible to a patch.
+Just after the bug report was created the issue has the label `Triage` which means that it was not reviewed by a developer and needs to be evaluated. Once the issue was reviewed if the bug report is too vague it will be labeled as `Needs more info`. If we can't reproduce the bug in any shape or form it will be marked as `Won't fix`. If the bug is easy to fix and relatively straight forward it will receive the `Good first issue`. These are good issues to tackle for new contributors.
+If a contributor managed to reproduce your bug the report will receive the `Reproduced` label and your bug is eligible to a patch.
 Then a contributor might develop a patch resolving your bug and make a pull request for it mentioning the bug report issue number.
-Finally when the issue is merged it will recieve the `Fixed` label and the issue will be closed.
+Finally when the issue is merged it will receive the `Fixed` label and the issue will be closed.
 
 ## Are you writing a patch ?
 
-- Fork the repository and create a new branch with a desciptive name for the patch you plan on submitting.
-- Develop your patch folowing the coding guidelines.
+- Fork the repository and create a new branch with a descriptive name for the patch you plan on submitting.
+- Develop your patch following the coding guidelines.
 - Open a new pull request with the patch.
-- Ensure the PR description clearly descibes the solution. Include the issue number if applicable.
-- Before submitting for review please ensure the content of the PR comforms to the coding guidelines and make sure the `make checks` command succeeds.
+- Ensure the PR description clearly describes your solution to the problem you fixed. Include the issue number if applicable.
+- Before submitting for review please ensure the content of the PR conforms to the coding guidelines and make sure the `make checks` command succeeds when applicable.
 
 ### Commits 
 
-General rule: if you submit code that fixes previous code that violates those
-guidelines on top of your fix. Do a separate commit for the fix and the coding guidelines corrections.
-Similarly speparate the formating of the code and the fixes in separate
-commits. This facilitate the reviewing of the merge request.
+> General rule: separate formatting and adapting to coding guidelines from the
+contribution itself. 
+
+If the part of the code you are modifying needs
+re-formatting, do the formatting in a separate commit. If the part of the code
+you are modifying does not follow the coding guidelines, try to adapt the code
+to follow those in a separate commit (not always possible). Then, add the
+commit with the fix itself. This facilitate the reviewing of the merge request
+a lot.
 
 # Coding guidelines.
 
@@ -47,7 +52,7 @@ commits. This facilitate the reviewing of the merge request.
 
 If you find coding guidelines violations in the source code you can submit an issue with the tag:
 `Coding Guidelines violation`. These issues are not urgent and will not be
-included in the milestones. However These are often good first issues to get
+included in the milestones. However these are often labeled as `Good first issue` and are great to get
 familiar with the codebase.
 
 ## File organization
@@ -85,18 +90,18 @@ src
 
 ### (JAVA 1) Prefer `Optional` over  `null`.
 
-`null` is error prone and unclear. When seeing the signature of a function it is not immediatly clear if the result can be `null` 
+`null` is error prone and unclear. When seeing the signature of a function it is not immediately clear if the result can be `null` 
 for this reason prefer the use of `Optional` when possible. 
-If not possible please annotate the argument or parameter with the `@Nullable` anotation.
+If not possible please annotate the argument or parameter with the `@Nullable` annotation.
 
 ### (JAVA 2) Code Comments
 
-Each java method in a class should be documented using javadoc comments `\** *\` at the exeption of the api handlers these sould be commented using the swagger annotations.
+Each java method in a class should be documented using javadoc comments `\** *\` at the exception of the API handlers these should be commented using the swagger annotations.
 
 ## HTML/CSS/JS
-### (Front-Ent 1) Code Comments
+### (Front-End 1) Code Comments
 
-In javascript files that defines any new angular module, use this kind of comment
+In JavaScript files that defines any new angular module, use this kind of comment
 ```js
 /**
  * @memberOf NumaHOP
@@ -104,7 +109,7 @@ In javascript files that defines any new angular module, use this kind of commen
  */
 ```
 
-For each angularjs service, controller, filter or directive, use the following comment replacing service by any of the previously mentioned 
+For each AngularJs service, controller, filter or directive, use the following comment replacing service by any of the previously mentioned 
 item:
 ```js
 /**
@@ -135,7 +140,7 @@ Similarly for a controller use:
  angular.module('NumaHOP.MyModule').service('myService', myService);
 ```
 
-To document a function
+To document a function or a property:
 ```js
 /**
  * @property a
@@ -157,14 +162,14 @@ function myFunction(a) {
 
 ### (API 1) Specification.
 
-The api of NumaHOP must respect the [Open-Api v3.1 specification](https://spec.openapis.org/oas/v3.1.1.html).
+The API of NumaHOP must respect the [Open-Api v3.1 specification](https://spec.openapis.org/oas/v3.1.1.html).
 
 ### (API 2) Route request Handlers.
 
 On handlers prefer the use of the methods mapping (eg: `@GetMapping`) instead of the more verbose `@RequestMapping`.
 
 There can only be 1 handler per methods on each routes.
-For example this is disalowed:
+For example this is disallowed:
 ```java
 @RequestMapping("/api/rest/user")
 class UserController {
