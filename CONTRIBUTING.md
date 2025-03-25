@@ -32,16 +32,35 @@ included in the milestones. However These are often good first issues to get
 familiar with the codebase.
 
 ## File organization
-Files are organized 
 
-In the backend files are separated in 3 major fonctional folders:
-- repository: Classes that abstract over data storage methods 
-- services: Class containing the buissiness logic.
-- web: Classes defining the api.
+Here is the global organization of the project:
 
-Some other notable locations:
-- config: Configuration classes.
-- domain: Classes containing the DataClasses and their Data Transfer Object (DTO). 
+``` 
+src
+├─ main
+│  ├─ docker # All the docker related files.
+│  ├─ java/fr/progilone/pgcn/
+│  │  ├─ config # Java configuration classes
+│  │  ├─ domain # Data Classes
+│  │  ├─ repository # Storage abstractions 
+│  │  ├─ service # buissiness
+│  │  └─ web # Api handlers
+│  ├─ webapp
+│  │  ├─ assets # Static assets.
+│  │  ├─ i18n # Translations.
+│  │  └─ scripts
+│  │     ├─ config # Configuration  definitions.
+│  │     ├─ api # $ressources definitions.
+│  │     ├─ services # Services.
+│  │     ├─ components # Reusable components.
+│  │     └─ app # Page Controllers and templates.
+│  ├─ ressources # Ressources to be bundled in the jar. 
+│  └─ scss # Styles
+└── test
+    ├─ javascript # front-end tests
+    ├─ java # back-end tests
+    └─ ressources # test ressources
+```
 
 ## Java
 
