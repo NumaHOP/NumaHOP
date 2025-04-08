@@ -1,3 +1,48 @@
+#####################################################
+# ================= Build & Checks ================ #
+#####################################################
+
+mvn_cmd_pattern = mvn $(1) $(2)  ${MVN_EXTRA_ARGS}
+build_targets = $(1)all $(1)docker $(1)app $(1)min: $(1)%:
+
+# Build the back-end, docker image and front-end
+all = -Pdocker -Dfast=true
+# Build the back-end and docker image.
+docker = -Pdocker -Dskip-front-end -Dfast=true
+# Build the back-end and front-end.
+app = -Dfast=true
+# Build only the back-end.
+min = -Dskip-front-end -Dfast=true
+
+
+$(call build_targets, build-)
+	$(call mvn_cmd_pattern,compile,$($*))
+
+# Stop docker constainer build java, front-end, docker and javadoc and restart container.
+full-rebuild: -app-down clean build-all
+
+clean:
+	$(call mvn_cmd_pattern,clean,)
+
+checks:
+	mvn validate
+	npm run check
+	npm ci --cache .npm --prefer-offline --no-audit --legacy-peer-deps
+
+fmt:
+	$(call mvn_cmd_pattern,sortpom:sort spring-javaformat:apply,)
+	npm run format
+
+build-docs:
+	$(call mvn_cmd_pattern,javadoc:aggregate,)
+	npm run doc
+
+setup:
+	npm ci --legacy-peer-deps
+
+setup-docker:
+	docker build -t $(docker_run_img_name) $(docker_base_img_build_dir) --target run
+
 #########################################################
 # ================= Docker Management ================= #
 #########################################################
@@ -53,44 +98,8 @@ $(call volumes,reset-)
 # Reset everything.
 reset-all: reset-db reset-es reset-nh
 
-#####################################################
-# ================= Maven & Build ================= #
-#####################################################
-
-mvn_cmd_pattern = mvn $(1) $(2) -Dfast=true ${MVN_EXTRA_ARGS}
-build_targets = $(1)all $(1)docker $(1)app $(1)min: $(1)%:
-
-# Build the back-end, docker image and front-end
-all = -Pdocker
-# Build the back-end and docker image.
-docker = -Pdocker -Dskip-front-end
-# Build the back-end and front-end.
-app =
-# Build only the back-end.
-min = -Dskip-front-end
-
-
-$(call build_targets, build-)
-	$(call mvn_cmd_pattern,compile,$($*))
-
-# Stop docker constainer build java, front-end, docker and javadoc and restart container.
-full-rebuild: -app-down clean build-all
-
-clean:
-	$(call mvn_cmd_pattern,clean,)
-
-fmt:
-	$(call mvn_cmd_pattern,sortpom:sort spring-javaformat:apply,)
-	npm run format
-
-build-docs:
-	$(call mvn_cmd_pattern,javadoc:javadoc,)
-
-setup-docker:
-	docker build -t $(docker_run_img_name) $(docker_base_img_build_dir) --target run
-
 #############################################
-# ================= HACK ================= #
+# ================= HACK ================== #
 #############################################
 
 # Allow to ignore rule dependency failure by adding - before the rule name
