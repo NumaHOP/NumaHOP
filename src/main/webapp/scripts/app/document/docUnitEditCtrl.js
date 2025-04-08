@@ -10,6 +10,7 @@
         $q,
         $routeParams,
         $scope,
+        $window,
         $timeout,
         codeSrvc,
         WebsocketSrvc,
@@ -467,11 +468,23 @@
             $location.search({});
             $location.path('/document/docunit');
         };
-        $scope.goToAllOperations = function (tab) {
-            if (tab) {
-                $location.path('/document/all_operations/' + $scope.docUnit.identifier).search({ tab: tab });
+
+        /**
+         * Open the document operations to the tab provided or the Doc unit tab by default.
+         * If the event is a ctrl click or a middle click opens in a new tab.
+         * @param {Event} event - the click event.
+         * @param {String} tab - the operation tab to go to.
+         */
+        $scope.goToAllOperations = function (event, tab) {
+            var path = '/document/all_operations/' + $scope.docUnit.identifier;
+            var search = '';
+            if ((event.ctrlKey && event.button == 0) || (event.button == 1)) {
+                $window.open('#' + path);
             } else {
-                $location.path('/document/all_operations/' + $scope.docUnit.identifier).search('');
+                if (tab) {
+                    search = { tab: tab };
+                }
+                $location.path(path).search(search);
             }
         };
 
