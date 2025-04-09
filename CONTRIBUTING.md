@@ -204,12 +204,12 @@ For example this is disallowed:
 class UserController {
     
     @GetMapping
-    fn getCurrentUser() {
+    public ResponseEntity<?> getCurrentUser() {
         // ...
     }
 
     @GetMapping(params = {"id"})
-    fn getUser(@QueryParam String id) {
+    public ResponseEntity<?> getUser(@QueryParam String id) {
         // ...
     }
 }
@@ -221,12 +221,12 @@ Instead use a route parameter:
 class UserController {
     
     @GetMapping
-    fn getCurrentUser() {
+    public ResponseEntity<?> getCurrentUser() {
         // ...
     }
 
     @GetMapping("/{id}")
-    fn getUser(@PathVariable String id) {
+    public ResponseEntity<?> getUser(@PathVariable String id) {
         // ...
     }
 }
@@ -244,19 +244,19 @@ Disallowed:
 @RequestMapping("/api/rest/user")
 class UserController {
     
-    /* ... /api/rest/user handlers  */
+    /* ... other /api/rest/user handlers  */
 
-    @GetMapping("/profile")
-    fn getUserProfile() { /* ... */ }
+    @GetMapping("/{id}/profile")
+    public ResponseEntity<?> getUserProfile() { /* ... */ }
 
-    @PostMapping("/profile")
-    fn createUserProfile() { /* ... */ }
+    @PostMapping("/{id}/profile")
+    public ResponseEntity<?> createUserProfile() { /* ... */ }
 
-    @DeleteMapping("/profile")
-    fn deleteUserProfile() { /* ... */ }
+    @DeleteMapping("/{id}/profile")
+    public ResponseEntity<?> deleteUserProfile() { /* ... */ }
 
-    @PutMapping("/profile")
-    fn updateUserProfile() { /* ... */ }
+    @PutMapping("/{id}/profile")
+    public ResponseEntity<?> updateUserProfile() { /* ... */ }
 }
 ```
 Instead a `UserProfileController` class should be created.
@@ -266,10 +266,10 @@ Allowed:
 @RequestMapping("/api/rest/user")
 class UserController {
 
-    /* ... /api/rest/user handlers */
+    /* ... other /api/rest/user handlers */
 
     @GetMapping("/search")
-    fn searchUsers() { /* ... */ }
+    public ResponseEntity<?> searchUsers() { /* ... */ }
 }
 ```
 
