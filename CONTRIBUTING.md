@@ -195,7 +195,7 @@ The API of NumaHOP must respect the [Open-Api v3.1 specification](https://spec.o
 
 On handlers prefer the use of the methods mapping (eg: `@GetMapping`, `@PostMappin`, etc) instead of the more verbose `@RequestMapping`.
 
-### (API 3) Route request Handlers.
+### (API 3) Route request Handlers and Controller classes.
 
 There can only be 1 handler per methods on each routes.
 For example this is disallowed:
@@ -232,12 +232,12 @@ class UserController {
 }
 ```
 
-Minimize the number of different routes for one controller. If a route has the
-4 methods following defined it should have its own class:
-- POST (creation)
-- GET (fetching)
-- DELETE (suppression)
-- PUT (update) If not it can be located in its parent class.
+Minimize the number of controllers and route handlers per controllers.
+The general rule is if a route has the 4 CRUD methods defined it should have its own class:
+- POST (Creation)
+- GET (Reading)
+- PUT (Update)
+- DELETE (Deletion)
 
 Disallowed:
 ```java
@@ -273,7 +273,38 @@ class UserController {
 }
 ```
 
-### (API 4) Front-end API usage.
+
+Similarly if a Controller doesn't have the 4 CRUD methods it should be merged with a parent controller if possible.
+
+### (API 4) Handler return values.
+
+All the response values of the handlers must return DTO class if the media type is JSON.
+
+Disallowed:
+```java
+@RequestMapping("/api/rest/user")
+class UserController {
+
+    /* ... /api/rest/user handlers */
+
+    @GetMapping("/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> searchUsers() { /* ... */ }
+}
+```
+
+Allowed:
+```java
+@RequestMapping("/api/rest/user")
+class UserController {
+
+    /* ... /api/rest/user handlers */
+
+    @GetMapping("/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> searchUsers() { /* ... */ }
+}
+```
+
+### (API 5) Front-end API usage.
 
 Similarly in the front-end each back-end controller must have a matching
 `$ressource` call. With the definition of the route, method, and query
