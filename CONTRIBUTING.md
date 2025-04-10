@@ -274,11 +274,13 @@ class UserController {
 ```
 
 
-Similarly if a Controller doesn't have the 4 CRUD methods it should be merged with a parent controller if possible.
+Similarly if a Controller doesn't have the 4 CRUD methods it should be merged
+with a parent controller if possible.
 
 ### (API 4) Handler return values.
 
-All the response values of the handlers must return DTO class if the media type is JSON.
+All the response values of the handlers must return DTO class if the media type
+is JSON.
 
 Disallowed:
 ```java
