@@ -146,8 +146,8 @@ comment replacing service by any of the previously mentioned item:
  * @ngInject //Document the injected angular js services.
  * @description This is my angularjs service.
  */
- function myAngularObject($http) {
-
+ function myService(/* ... */) {
+    /* ... */
  }
  angular.module('NumaHOP.MyModule').service('myService', myService);
 ```
@@ -161,10 +161,10 @@ Similarly for a controller use:
  * @ngInject //Document the injected angular js services.
  * @description This is my angularjs controller.
  */
- function myController($http) {
-
+ function myController(/* ... */) {
+    /* ... */
  }
- angular.module('NumaHOP.MyModule').service('myService', myService);
+ angular.module('NumaHOP.MyModule').controller('myController', myController);
 ```
 
 To document a function or a property:
@@ -181,7 +181,7 @@ var obj = {};
  * @param a
  */
 function myFunction(a) {
-    ...
+    /* ... */
 }
 ```
 
