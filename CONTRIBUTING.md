@@ -188,53 +188,54 @@ function myFunction(a) {
 
 ## Api
 
-### (API 1) Specification.
+### (API 1) Specification
 
 The API of NumaHOP must respect the [Open-Api v3.1 specification](https://spec.openapis.org/oas/v3.1.1.html).
 
-### (API 2) Use of verbose annotation.
+### (API 2) Api design
 
-On handlers prefer the use of the methods mapping (eg: `@GetMapping`, `@PostMappin`, etc) instead of the more verbose `@RequestMapping`.
+### (API 2.1) HTTP Methods
 
-### (API 3) Route request Handlers and Controller classes.
+Where applicable CRUD methods must used: 
+| functionality | url             | method | 
+| ------------- | --------------- | ------ |
+| create        | `/<object>`     | POST   |
+| read          | `/<object>/:id` | GET    |
+| update        | `/<object>/:id` | PUT    |
+| delete        | `/<object>/:id` | DELETE |
+| list          | `/<object>`     | GET    |
 
-There can only be 1 handler per methods on each routes.
-For example this is disallowed:
-```java
-@RequestMapping("/api/rest/user")
-class UserController {
-    
-    @GetMapping
-    public ResponseEntity<?> getCurrentUser() {
-        // ...
-    }
+If an object is often updated partialy in a namable way a `PATCH` method
+can be implementd.
 
-    @GetMapping(params = {"id"})
-    public ResponseEntity<?> getUser(@QueryParam String id) {
-        // ...
-    }
-}
-```
+### (API 2.2) Unique routes for functionality 
 
-Instead use a route parameter:
-```java
-@RequestMapping("/api/rest/user")
-class UserController {
-    
-    @GetMapping
-    public ResponseEntity<?> getCurrentUser() {
-        // ...
-    }
+One route should be associated with only one functionality.
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getUser(@PathVariable String id) {
-        // ...
-    }
-}
-```
+Disallowed:
+| functionality                  | url                  | method | 
+| ------------------------------ | -------------------- | ------ |
+| check if operation is finished | `/operation?isDone`  | GET    |
+| process operation              | `/operation?process` | GET    |
 
-Minimize the number of controllers and route handlers per controllers.
-The general rule is if a route has the 4 CRUD methods defined it should have its own class:
+Allowed:
+| functionality                  | url                  | method | 
+| ------------------------------ | -------------------- | ------ |
+| check if operation is finished | `/operation/isDone`  | GET    |
+| process operation              | `/operation/process` | POST   |
+
+### (API 3) Api implementation
+
+##### (API 3.1) Use of verbose annotation
+
+On handlers prefer the use of the methods mapping (eg: `@GetMapping`,
+`@PostMappin`, etc) instead of the more verbose `@RequestMapping`.
+
+#### (API 3.3) Route request Handlers and Controller classes
+
+Minimize the number of controllers and route handlers per controllers. The
+general rule is if a route has the 4 CRUD methods defined it should have its
+own class:
 - POST (Creation)
 - GET (Reading)
 - PUT (Update)
@@ -274,11 +275,10 @@ class UserController {
 }
 ```
 
-
 Similarly if a Controller doesn't have the 4 CRUD methods it should be merged
 with a parent controller if possible.
 
-### (API 4) Handler return values.
+#### (API 3.4) Handler return values
 
 All the response values of the handlers must return DTO class if the media type
 is JSON.
@@ -307,25 +307,18 @@ class UserController {
 }
 ```
 
-### (API 5) Front-end API usage.
+### (API 4) Front-end API usage
 
-Similarly in the front-end each back-end controller must have a matching
-`$ressource` call. With the definition of the route, method, and query
-parameters.
+If the module you want to use has a CRUD interface, the `$ressource` function
+must be used to create a front-end service as it creates default functions for
+a CRUD api usage given a base route. Otherwise create your service using the
+`$http` angular service. See
+[\$resource](https://docs.angularjs.org/api/ngResource/service/$resource) and
+[\$http](https://docs.angularjs.org/api/ng/service/$http).
 
-Due to how AngularJs auto generates the handlers, these are the route expected
-in the API: 
+Any additional routes to a CRUD endpoint can be added to the `$ressource` call. 
 
-| method | url             | meaning   |
-| ------ | --------------- | --------- |
-| POST   | `/<object>`     | create    |
-| GET    | `/<object>`     | list      |
-| GET    | `/<object>/:id` | get by id |
-| DELETE | `/<object>/:id` | delete    |
-| POST   | `/<object>/:id` | update    |
-
-Any other routes should be manualy declared in the `$ressource` call. A few examples:
-
+A few examples where `/<object>` also has a CRUD api:
 | method | url                    | meaning                      |
 | ------ | ---------------------- | ---------------------------- |
 | GET    | `/<object>/search?...` | a search with filters        |
