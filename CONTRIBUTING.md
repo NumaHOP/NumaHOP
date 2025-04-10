@@ -67,9 +67,9 @@ In the commit message where the fix is situated please include a test plan for
 the fix. This makes the review process a lot quicker and easier for the
 reviewer.
 
-# Coding guidelines.
+# Coding guidelines
 
-## Coding guideline violations.
+## Coding guideline violations
 
 If you find coding guidelines violations in the source code you can submit an
 issue with the tag: `Coding Guidelines violation`. These issues are not urgent
@@ -89,17 +89,17 @@ src
 │  │  ├─ domain # Data Classes
 │  │  ├─ repository # Storage abstractions 
 │  │  ├─ service # buissiness
-│  │  └─ web # Api handlers
+│  │  └─ web # Api implementation
 │  ├─ webapp
-│  │  ├─ assets # Static assets.
-│  │  ├─ i18n # Translations.
+│  │  ├─ assets # Static assets
+│  │  ├─ i18n # Translations
 │  │  └─ scripts
-│  │     ├─ config # Configuration  definitions.
-│  │     ├─ api # $ressources definitions.
-│  │     ├─ services # Services.
-│  │     ├─ components # Reusable components.
-│  │     └─ app # Page Controllers and templates.
-│  ├─ ressources # Ressources to be bundled in the jar. 
+│  │     ├─ config # Configuration  definitions
+│  │     ├─ api # $ressources definitions
+│  │     ├─ services # Services
+│  │     ├─ components # Reusable components
+│  │     └─ app # Page Controllers and templates
+│  ├─ ressources # Ressources to be bundled in the jar 
 │  └─ scss # Styles
 └── test
     ├─ javascript # front-end tests
@@ -122,12 +122,13 @@ Each java method in a class should be documented using javadoc comments `\**
 *\` at the exception of the API handlers these should be commented using the
 swagger annotations.
 
-## HTML/CSS/JS
+Trivial getters and setters can also be left undocumented.
+
+## Front-End
 ### (Front-End 1) Code Comments
 
 In JavaScript files that defines any new angular module, use this kind of
-comment
-
+comment:
 ```js
 /**
  * @memberOf NumaHOP
