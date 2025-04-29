@@ -64,3 +64,7 @@ The installation manual can be found at this url: https://biblibre.github.io/Num
 - **TECH'advantage** - https://www.tech-advantage.com/
 - **Persée** : https://www.persee.fr/
 - **BibLibre** : https://www.biblibre.com/
+
+## Getting Involved
+
+Please read [the contibution guide](./CONTRIBUTING.md).
