@@ -31,7 +31,7 @@
         <java.version>17</java.version>
         <jena.version>4.7.0</jena.version>
         <jib-maven-plugin.version>3.4.4</jib-maven-plugin.version>
-        <jsch.version>0.1.55</jsch.version>
+        <jsch.version>2.27.0</jsch.version>
         <jsog.version>1.1.2</jsog.version>
         <json.version>20220924</json.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
@@ -103,7 +103,7 @@
             <artifactId>json-path</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.jcraft</groupId>
+            <groupId>com.github.mwiede</groupId>
             <artifactId>jsch</artifactId>
             <version>${jsch.version}</version>
         </dependency>
