@@ -36,7 +36,7 @@ import org.springframework.data.elasticsearch.core.suggest.Completion;
 /**
  * Classe représentant une unité documentaire
  */
-@Document(indexName = "#{@environment.getProperty('elasticsearch.index.name')}-doc-unit")
+@Document(indexName = "#{@environment.getProperty('elasticsearch.index.name')}#{@environment.getProperty('elasticsearch.index.separator')}doc-unit")
 @Setting(settingPath = "config/elasticsearch/settings_pgcn.json", shards = 1, replicas = 0)
 public class EsDocUnit {
 

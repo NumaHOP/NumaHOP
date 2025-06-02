@@ -20,7 +20,7 @@ import org.springframework.data.elasticsearch.annotations.Setting;
 /**
  * Classe métier permettant de gérer les projets.
  */
-@Document(indexName = "#{@environment.getProperty('elasticsearch.index.name')}-project")
+@Document(indexName = "#{@environment.getProperty('elasticsearch.index.name')}#{@environement.getProperty('elasticsearch.index.separator')}project")
 @Setting(settingPath = "config/elasticsearch/settings_pgcn.json", shards = 1, replicas = 0)
 public class EsProject {
 

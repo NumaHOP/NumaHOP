@@ -121,6 +121,7 @@ elasticsearch:
     bulk_size: 500
     index:
         name: pgcn
+        separator: '-'
 
 cache: # Cache configuration
     ehcache: # Ehcache configuration
