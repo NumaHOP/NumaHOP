@@ -17,7 +17,8 @@ import org.springframework.data.elasticsearch.annotations.Setting;
 /**
  * Classe métier permettant de gérer les bibliothèques.
  */
-@Document(indexName = "#{@environment.getProperty('elasticsearch.index.name')}#{@environment.getProperty('elasticsearch.index.separator')}lot")
+@Document(
+		indexName = "#{@environment.getProperty('elasticsearch.index.name')}#{@environment.getProperty('elasticsearch.index.separator')}lot")
 @Setting(settingPath = "config/elasticsearch/settings_pgcn.json", shards = 1, replicas = 0)
 public class EsLot {
 

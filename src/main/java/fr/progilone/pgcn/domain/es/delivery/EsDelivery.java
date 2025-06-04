@@ -18,7 +18,8 @@ import org.springframework.data.elasticsearch.annotations.Setting;
 /**
  * Classe métier permettant de gérer les livraisons.
  */
-@Document(indexName = "#{@environment.getProperty('elasticsearch.index.name')}#{@environment.getProperty('elasticsearch.index.separator')}delivery")
+@Document(
+		indexName = "#{@environment.getProperty('elasticsearch.index.name')}#{@environment.getProperty('elasticsearch.index.separator')}delivery")
 @Setting(settingPath = "config/elasticsearch/settings_pgcn.json", shards = 1, replicas = 0)
 public class EsDelivery {
 

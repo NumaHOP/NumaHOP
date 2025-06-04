@@ -478,7 +478,7 @@
         $scope.goToAllOperations = function (event, tab) {
             var path = '/document/all_operations/' + $scope.docUnit.identifier;
             var search = '';
-            if ((event.ctrlKey && event.button == 0) || (event.button == 1)) {
+            if ((event.ctrlKey && event.button == 0) || event.button == 1) {
                 $window.open('#' + path);
             } else {
                 if (tab) {
