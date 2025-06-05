@@ -14,7 +14,8 @@ import org.springframework.data.elasticsearch.annotations.Setting;
 /**
  * Constat d'état: données générales
  */
-@Document(indexName = "#{@environment.getProperty('elasticsearch.index.name')}-condition-report")
+@Document(
+		indexName = "#{@environment.getProperty('elasticsearch.index.name')}#{@environment.getProperty('elasticsearch.index.separator')}condition-report")
 @Setting(settingPath = "config/elasticsearch/settings_pgcn.json", shards = 1, replicas = 0)
 public class EsConditionReport {
 
