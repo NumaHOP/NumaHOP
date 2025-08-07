@@ -6,7 +6,7 @@
 
 This project is licenced under AGPLv3, see [LICENSE.md](LICENSE) for details.
 
-The developper documentation is available [here](https://biblibre.github.io/NumaHOP-doc/).
+The developper documentation is available [here](https://numahop.github.io/Documentation/).
 
 The offical website (in french) is at this [link](https://www.numahop.fr/).
 
