@@ -20,12 +20,17 @@ import org.springframework.security.data.repository.query.SecurityEvaluationCont
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfiguration {
+
+	// PathPattern n'autorise "**" qu'en fin de motif : l'ancien
+	// "/scripts/**/*.{js,html}" devient "/scripts/**" (sans incidence, la regle finale
+	// etant anyRequest().permitAll()).
+	private static final PathPatternRequestMatcher.Builder PATH = PathPatternRequestMatcher.withDefaults();
 
 	private final Environment env;
 
@@ -64,7 +69,7 @@ public class SecurityConfiguration {
 
 	@Bean
 	public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
-		http.csrf(csrf -> csrf.ignoringRequestMatchers(new AntPathRequestMatcher("/websocket/**")))
+		http.csrf(csrf -> csrf.ignoringRequestMatchers(PATH.matcher("/websocket/**")))
 			.addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
 			.exceptionHandling(c -> c.authenticationEntryPoint(authenticationEntryPoint))
 			.rememberMe(c -> c.rememberMeServices(rememberMeServices)
@@ -84,17 +89,15 @@ public class SecurityConfiguration {
 				.contentSecurityPolicy(contentSecurityPolicyConfig -> contentSecurityPolicyConfig.policyDirectives(
 						"default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-eval' 'unsafe-inline'; img-src 'self' data:;")))
 			.authorizeHttpRequests(authorize -> authorize
-				.requestMatchers(new AntPathRequestMatcher("/api/authenticate"),
-						new AntPathRequestMatcher("/api/rest/reset"))
+				.requestMatchers(PATH.matcher("/api/authenticate"), PATH.matcher("/api/rest/reset"))
 				.permitAll()
-				.requestMatchers(new AntPathRequestMatcher("/api/**"), new AntPathRequestMatcher("/protected/**"))
+				.requestMatchers(PATH.matcher("/api/**"), PATH.matcher("/protected/**"))
 				.authenticated()
-				.requestMatchers(new AntPathRequestMatcher("/api_int/**"))
+				.requestMatchers(PATH.matcher("/api_int/**"))
 				.hasRole(AuthorizationConstants.SUPER_ADMIN)
-				.requestMatchers(new AntPathRequestMatcher("/websocket/**"), new AntPathRequestMatcher("/actuator/**"),
-						new AntPathRequestMatcher("/scripts/**/*.{js,html}"), new AntPathRequestMatcher("/libs/**"),
-						new AntPathRequestMatcher("/i18n/**"), new AntPathRequestMatcher("/assets/**"),
-						new AntPathRequestMatcher("/swagger-ui.html"))
+				.requestMatchers(PATH.matcher("/websocket/**"), PATH.matcher("/actuator/**"),
+						PATH.matcher("/scripts/**"), PATH.matcher("/libs/**"), PATH.matcher("/i18n/**"),
+						PATH.matcher("/assets/**"), PATH.matcher("/swagger-ui.html"))
 				.permitAll()
 				.anyRequest()
 				.permitAll());
