@@ -66,7 +66,8 @@ public class MailboxConfigurationControllerTest {
 	public void testCreate() throws Exception {
 		final MailboxConfiguration cConfigurationMail = getCConfigurationMail("ABCD-1234");
 		when(mailboxConfigurationService.save(any(MailboxConfiguration.class))).thenReturn(cConfigurationMail);
-		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any(String[].class)))
+			.thenReturn(true);
 
 		this.restMockMvc
 			.perform(post("/api/rest/conf_mail").contentType(MediaType.APPLICATION_JSON)
@@ -84,7 +85,8 @@ public class MailboxConfigurationControllerTest {
 		final MailboxConfiguration cConfigurationMail = getCConfigurationMail("ABCD-1235");
 		final String identifier = cConfigurationMail.getIdentifier();
 
-		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any(String[].class)))
+			.thenReturn(true);
 
 		when(mailboxConfigurationService.findOne(cConfigurationMail.getIdentifier())).thenReturn(cConfigurationMail);
 
@@ -140,7 +142,8 @@ public class MailboxConfigurationControllerTest {
 		final MailboxConfiguration cConfigurationMail = getCConfigurationMail("ABCD-1238");
 		when(mailboxConfigurationService.findOne(cConfigurationMail.getIdentifier())).thenReturn(cConfigurationMail) // ok
 			.thenReturn(null); // ko
-		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any(String[].class)))
+			.thenReturn(true);
 
 		// test ok
 		this.restMockMvc
@@ -170,7 +173,8 @@ public class MailboxConfigurationControllerTest {
 
 		when(mailboxConfigurationService.findOne(cConfigurationMail.getIdentifier())).thenReturn(cConfigurationMail);
 		when(mailboxConfigurationService.save(cConfigurationMail)).thenReturn(savedStat);
-		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any(String[].class)))
+			.thenReturn(true);
 
 		// test update
 		this.restMockMvc

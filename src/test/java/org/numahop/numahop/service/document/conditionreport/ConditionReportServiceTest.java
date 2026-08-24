@@ -351,7 +351,8 @@ public class ConditionReportServiceTest {
 		report.setDocUnit(docUnit);
 		final List<ConditionReport> reports = Collections.singletonList(report);
 
-		final CapturingMatcher<Map<String, List<String>>> descMatcher = new CapturingMatcher<>();
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		final CapturingMatcher<Map<String, List<String>>> descMatcher = new CapturingMatcher<>((Class) Map.class);
 
 		when(conditionReportRepository.search(eq(libraries), eq(projects), eq(lots), eq(from), eq(to), eq(dimensions),
 				argThat(descMatcher), any(), eq(false), any(Pageable.class)))

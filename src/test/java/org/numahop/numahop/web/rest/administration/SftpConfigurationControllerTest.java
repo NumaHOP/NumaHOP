@@ -75,7 +75,8 @@ public class SftpConfigurationControllerTest {
 	public void testCreate() throws Exception {
 		final SftpConfiguration configurationSftp = getConfigurationSftp("ABCD-1234");
 		when(sftpConfigurationService.save(any(SftpConfiguration.class))).thenReturn(configurationSftp);
-		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any(String[].class)))
+			.thenReturn(true);
 
 		this.restMockMvc
 			.perform(post("/api/rest/conf_sftp").contentType(MediaType.APPLICATION_JSON)
@@ -93,7 +94,8 @@ public class SftpConfigurationControllerTest {
 		final SftpConfiguration configurationSftp = getConfigurationSftp("ABCD-1235");
 		final String identifier = configurationSftp.getIdentifier();
 
-		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any(String[].class)))
+			.thenReturn(true);
 		when(sftpConfigurationService.findOne(configurationSftp.getIdentifier())).thenReturn(configurationSftp);
 
 		// test delete
@@ -145,7 +147,8 @@ public class SftpConfigurationControllerTest {
 	@Test
 	public void getById() throws Exception {
 		final SftpConfiguration configurationSftp = getConfigurationSftp("ABCD-1238");
-		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any(String[].class)))
+			.thenReturn(true);
 		when(sftpConfigurationService.findOne(configurationSftp.getIdentifier())).thenReturn(configurationSftp) // ok
 			.thenReturn(null); // ko
 
@@ -171,7 +174,8 @@ public class SftpConfigurationControllerTest {
 		final SftpConfiguration configurationSftp = getConfigurationSftp("ABCD-1239");
 		final String message = "connection failed";
 
-		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any(String[].class)))
+			.thenReturn(true);
 		when(sftpConfigurationService.findOne(configurationSftp.getIdentifier())).thenReturn(configurationSftp);
 		when(sftpService.initConnection(configurationSftp)).thenReturn(Optional.empty()) // ok
 			.thenReturn(Optional.of(message)); // ko
@@ -202,7 +206,8 @@ public class SftpConfigurationControllerTest {
 		final SftpConfiguration savedStat = getConfigurationSftp("ABCD-1239");
 		savedStat.setLabel("New label");
 
-		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any(String[].class)))
+			.thenReturn(true);
 		when(sftpConfigurationService.findOne(configurationSftp.getIdentifier())).thenReturn(configurationSftp);
 		when(sftpConfigurationService.save(configurationSftp)).thenReturn(savedStat);
 

@@ -103,7 +103,7 @@ public class ImportDocUnitServiceTest {
 			.when(docUnitValidationService)
 			.validate(docUnit);
 
-		final CapturingMatcher<ImportedDocUnit> matcher = new CapturingMatcher<>();
+		final CapturingMatcher<ImportedDocUnit> matcher = new CapturingMatcher<>(ImportedDocUnit.class);
 		when(importedDocUnitRepository.save(argThat(matcher))).then(new ReturnsArgumentAt(0));
 
 		try {
@@ -139,7 +139,7 @@ public class ImportDocUnitServiceTest {
 			.when(docUnitValidationService)
 			.validate(docUnit);
 
-		final CapturingMatcher<ImportedDocUnit> matcher = new CapturingMatcher<>();
+		final CapturingMatcher<ImportedDocUnit> matcher = new CapturingMatcher<>(ImportedDocUnit.class);
 		when(importedDocUnitRepository.save(argThat(matcher))).then(new ReturnsArgumentAt(0));
 
 		try {

@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.13</version>
+        <version>3.1.12</version>
     </parent>
     <groupId>org.numahop</groupId>
     <artifactId>numahop</artifactId>
@@ -23,6 +23,7 @@
         <frontend-maven-plugin.version>1.15.0</frontend-maven-plugin.version>
         <git-code-format-maven-plugin.version>5.3</git-code-format-maven-plugin.version>
         <guava.version>31.1-jre</guava.version>
+        <httpmime.version>4.5.14</httpmime.version>
         <imgscalr.version>4.2</imgscalr.version>
         <jacoco.version>0.8.11</jacoco.version>
         <jai-imageio-jpeg2000.version>1.4.0</jai-imageio-jpeg2000.version>
@@ -304,6 +305,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
+            <version>${httpmime.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents.client5</groupId>

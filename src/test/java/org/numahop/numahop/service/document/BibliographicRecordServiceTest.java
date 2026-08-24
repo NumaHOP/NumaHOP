@@ -156,7 +156,7 @@ public class BibliographicRecordServiceTest {
 
 		service.update(updates);
 
-		final CapturingMatcher<DocProperty> propertyMatcher = new CapturingMatcher<>();
+		final CapturingMatcher<DocProperty> propertyMatcher = new CapturingMatcher<>(DocProperty.class);
 
 		verify(docPropertyService).save(argThat(propertyMatcher));
 		verify(bibliographicRecordRepository).save(record);

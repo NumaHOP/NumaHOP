@@ -4,6 +4,7 @@ import org.numahop.numahop.domain.AbstractDomainObject;
 import java.lang.reflect.Member;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.generator.EventType;
 import org.hibernate.id.factory.spi.CustomIdGeneratorCreationContext;
 import org.hibernate.id.uuid.UuidGenerator;
 
@@ -21,8 +22,8 @@ public class CustomUUIDGenerator extends UuidGenerator {
 	}
 
 	@Override
-	public Object generate(final SharedSessionContractImplementor session, final Object object)
-			throws HibernateException {
+	public Object generate(final SharedSessionContractImplementor session, final Object object,
+			final Object currentValue, final EventType eventType) throws HibernateException {
 		if (object != null && object instanceof AbstractDomainObject) {
 			final String identifier = ((AbstractDomainObject) object).getIdentifier();
 
@@ -30,7 +31,7 @@ public class CustomUUIDGenerator extends UuidGenerator {
 				return identifier;
 			}
 		}
-		return super.generate(session, object);
+		return super.generate(session, object, currentValue, eventType);
 	}
 
 }

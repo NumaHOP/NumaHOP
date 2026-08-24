@@ -66,8 +66,8 @@ public class TemplateControllerTest {
 	public void testCreate() throws Exception {
 		final Template template = getTemplate();
 
-		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(false,
-				true);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any(String[].class)))
+			.thenReturn(false, true);
 		when(templateService.save(any(Template.class))).thenReturn(template);
 
 		// 403
@@ -208,8 +208,8 @@ public class TemplateControllerTest {
 
 		when(templateService.save(any(Template.class))).thenReturn(template);
 		when(templateService.findByIdentifier(template.getIdentifier())).thenReturn(null, dbTemplate);
-		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(false,
-				true, true, false, true);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any(String[].class)))
+			.thenReturn(false, true, true, false, true);
 
 		// 403
 		this.restMockMvc

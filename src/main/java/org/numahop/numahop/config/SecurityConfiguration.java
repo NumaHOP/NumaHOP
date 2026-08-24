@@ -12,6 +12,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -79,8 +80,7 @@ public class SecurityConfiguration {
 				.logoutSuccessHandler(ajaxLogoutSuccessHandler)
 				.deleteCookies("JSESSIONID", "hazelcast.sessionId")
 				.permitAll())
-			.headers(c -> c.frameOptions()
-				.disable()
+			.headers(c -> c.frameOptions(FrameOptionsConfig::disable)
 				.contentSecurityPolicy(contentSecurityPolicyConfig -> contentSecurityPolicyConfig.policyDirectives(
 						"default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-eval' 'unsafe-inline'; img-src 'self' data:;")))
 			.authorizeHttpRequests(authorize -> authorize
