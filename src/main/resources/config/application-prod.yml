@@ -9,9 +9,6 @@ exifTool:
 tesseract:
     process: /usr/bin/tesseract
 
-nativeLibraries:
-    path: /opt/svcmgmt/lib
-
 crypto:
     password: PhoOpJaiCwy3Jos
     salt: POEvsixIf+LyzBkDpEsM5ngX8+mLNbGJDLpPlqhgrGw=

@@ -65,7 +65,11 @@ public class Z3950Service {
 	}
 
 	/**
-	 * Pré-chargement des dll yaz4j par la classe {@link Connection}
+	 * Vérifie au démarrage que la librairie native yaz4j est chargeable, en initialisant
+	 * la classe {@link Connection} (dont le bloc statique déclenche le chargement de
+	 * libyaz4j). Sans cette sonde, un problème de packaging ou de librairie système
+	 * absente ne se manifesterait qu'à la première recherche Z39.50, sous la forme d'une
+	 * {@link LinkageError} non rattrapée par {@link #search}.
 	 */
 	@PostConstruct
 	public void init() {
@@ -260,13 +264,15 @@ public class Z3950Service {
 		final String password = z3950Server.getPassword();
 		final DataFormat dataFormat = z3950Server.getDataFormat();
 
-		/**
-		 * Un plantage a ce niveau peut arriver si les librairies yaz ne sont pas
-		 * installées, ou absentes du serveur Elles doivent être accessibles par
-		 * l'application, par la propriété de configuration "nativeLibraries.path"
-		 * (application-xxx.yml) => Install sous debian: apt-get install libyaz4 =>
-		 * Install sous windows: http://www.indexdata.com/yaz + La librairie yaz4j.dll et
-		 * ses dépendances sont accessibles via la variable d'environnement PATH
+		/*
+		 * Un plantage à ce niveau peut arriver si la librairie native yaz4j n'a pas pu
+		 * être chargée. Elle est embarquée dans le jar yaz4j (native/Linux/amd64/
+		 * libyaz4j.so), extraite puis chargée par org.yaz4j.LoadLib: il faut donc
+		 * seulement que libyaz.so.5 soit installée sur le système (paquet libyaz5 sous
+		 * Debian / Ubuntu) et que java.io.tmpdir soit accessible en écriture, sans
+		 * l'option de montage noexec. Sur une architecture autre que Linux/amd64, aucune
+		 * librairie n'est embarquée: il faut alors fournir libyaz4j sur java.library.path
+		 * (paquet libyaz4j d'Index Data).
 		 */
 		final Connection c = new Connection(host, port);
 
@@ -280,7 +286,7 @@ public class Z3950Service {
 		return c;
 	}
 
-	private Query createQuery(final Map<String, String> fields, final DataEncoding dataEncoding) {
+	private Query createQuery(final Map<String, String> fields, final DataEncoding dataEncoding) throws ZoomException {
 		// Map de champs pour la recherche Z3950
 		// http://www.bnf.fr/documents/profilZ3950_bnf.pdf
 		final Map<String, String> fieldsForZ3950Query = new HashMap<>();
