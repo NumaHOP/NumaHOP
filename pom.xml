@@ -66,7 +66,7 @@
         <spring-javaformat.version>0.0.43</spring-javaformat.version>
         <tika.version>1.18</tika.version>
         <xdocreport.version>2.0.4</xdocreport.version>
-        <yaz.version>1.5</yaz.version>
+        <yaz.version>1.6.0</yaz.version>
     </properties>
     <dependencies>
         <dependency>
@@ -457,11 +457,6 @@
             <artifactId>spring-security-messaging</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.yaz4j</groupId>
-            <artifactId>yaz4j-any</artifactId>
-            <version>${yaz.version}</version>
-        </dependency>
-        <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
             <version>7.4</version>
@@ -470,6 +465,15 @@
             <groupId>org.codehaus.janino</groupId>
             <artifactId>janino</artifactId>
             <version>3.1.8</version>
+        </dependency>
+        <!-- Z39.50 / ZOOM. The jar bundles native/Linux/amd64/libyaz4j.so, which
+             org.yaz4j.LoadLib extracts and loads at runtime; the only system
+             requirement is libyaz.so.5 (Debian/Ubuntu package libyaz5). Must stay
+             on the runtime classpath: jib drops provided-scope dependencies. -->
+        <dependency>
+            <groupId>org.yaz4j</groupId>
+            <artifactId>yaz4j</artifactId>
+            <version>${yaz.version}</version>
         </dependency>
         <dependency>
             <groupId>com.querydsl</groupId>

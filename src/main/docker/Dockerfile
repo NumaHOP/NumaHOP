@@ -13,7 +13,7 @@ RUN groupadd -r "$DOCKER_GROUP_NAME" -g "$DOCKER_GROUP_ID" \
  && chmod 0770 "$DOCKER_USER_HOME"
 
 RUN apt-get update \
- && apt-get install -y tesseract-ocr imagemagick libimage-exiftool-perl \
+ && apt-get install -y tesseract-ocr imagemagick libimage-exiftool-perl libyaz5 \
  && apt-get clean
 
 ENV IMAGEMAGICK_CONVERT_PATH /usr/bin/convert
@@ -26,10 +26,6 @@ FROM base AS run
 
 RUN mkdir -p /opt/pgcn \
  && chown ${DOCKER_USER_ID}:${DOCKER_GROUP_ID} /opt/pgcn
-
-# yaz4j native library
-ADD ["run/install-yaz.sh", "/"]
-RUN chmod u+x /install-yaz.sh && /install-yaz.sh && rm /install-yaz.sh
 
 USER ${DOCKER_USER_ID}:${DOCKER_GROUP_ID}
 
