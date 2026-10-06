@@ -1,0 +1,470 @@
+openapi: 3.1.1
+
+info:
+  title: NumaHOP Rest API
+  description: Specification for the Api of All NumaHOP Applications.
+  contact:
+    name: NumaHOP users association
+    email: association-numahop@sorbonne-nouvelle.fr
+    url: https://www.numahop.fr/
+  version: 0.0.1
+
+servers:
+  - url: /api/rest/v2
+
+tags:
+  - name: doc_unit
+
+paths:
+  /doc_units:
+    description: Document Unit API module.
+
+    get:
+      description: Retrives a list of document units.
+      operationId: searchDocUnits
+      tags:
+        - doc_unit
+      parameters:
+        - name: search
+          schema:
+            type: string
+          in: query
+        - name: hasDigitalDocuments
+          schema:
+            type: boolean
+          in: query
+        - name: active
+          schema:
+            type: boolean
+          in: query
+        - name: archived
+          schema:
+            type: boolean
+          in: query
+        - name: achivable
+          schema:
+            type: boolean
+          in: query
+        - name: distributed
+          schema:
+            type: boolean
+          in: query
+        - name: distribuable
+          schema:
+            type: boolean
+          in: query
+        - name: libaries
+          schema:
+            type: array
+            items:
+              type: string
+          in: query
+        - name: projects
+          schema:
+            type: array
+            items:
+              type: string
+          in: query
+        - name: lots
+          schema:
+            type: array
+            items:
+              type: string
+          in: query
+        - name: statuses
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/DocUnitState"
+          in: query
+        - name: lastModifiedDateFrom
+          schema:
+            type: string
+            format: date
+          in: query
+        - name: lastModifiedDateTo
+          schema:
+            type: string
+            format: date
+          in: query
+        - name: createdDateFrom
+          schema:
+            type: string
+            fromat: date
+          in: query
+        - name: createdDateTo
+          schema:
+            type: string
+            format: date
+          in: query
+        - name: page
+          schema:
+            type: integer
+          in: query
+        - name: size
+          schema:
+            type: integer
+          in: query
+        - name: sorts
+          schema:
+            type: array
+            items:
+              type: string
+          in: query
+
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DocUnit"
+        "401":
+          description: UNAUTHORIZED
+        "403":
+          description: FORBIDEN
+
+    post:
+      description: Create a document unit.
+      operationId: createDocUnit
+      tags:
+        - doc_unit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDocUnit"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocUnit"
+        "400":
+          description: BAD_REQUEST
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: "#/components/schemas/ObjectWithErrors"
+                    - $ref: "#/components/schemas/DocUnit"
+        "401":
+          description: UNAUTHORIZED
+        "403":
+          description: FORBIDEN
+
+  /doc_units/{identifier}:
+    description: Operations on an existing document unit.
+
+    get:
+      description: Retrives a document unit by its identifier.
+      operationId: getDocUnitById
+      tags:
+        - doc_unit
+      parameters:
+        - name: identifier
+          required: true
+          schema:
+            type: string
+          in: path
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocUnit"
+        "401":
+          description: UNAUTHORIZED
+        "403":
+          description: FORBIDEN
+        "404":
+          description: NOT_FOUND
+
+    put:
+      description: Updates a document unit.
+      operationId: updateDocUnit
+      tags:
+        - doc_unit
+      parameters:
+        - name: identifier
+          required: true
+          schema:
+            type: string
+          in: path
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocUnit"
+        "400":
+          description: BAD_REQUEST
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/DocUnit"
+                  - $ref: "#/components/schemas/ObjectWithErrors"
+        "401":
+          description: UNAUTHORIZED
+        "403":
+          description: FORBIDEN
+
+    delete:
+      description: Delete a document unit
+      operationId: deleteDocUnit
+      tags:
+        - doc_unit
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: UNAUTHORIZED
+        "403":
+          description: FORBIDEN
+
+components:
+  schemas:
+    # Base of every object in Numahop.
+    ObjectWithId:
+      type: object
+      required:
+        - identifier
+      properties:
+        identifier:
+          type: string
+        modifiedBy:
+          type: string
+        createdBy:
+          type: string
+        modifiedAt:
+          type: string
+          format: date
+        createdAt:
+          type: string
+          format: date
+
+    CreateDocUnit:
+      type: object
+      required:
+        - label
+        - pgcn_id
+        - rights
+        - library
+      properties:
+        pgcn_id:
+          type: string
+        label:
+          type: string
+        library:
+          type: string
+        type:
+          type: string
+        rights:
+          $ref: "#/components/schemas/DocUnitRights"
+        parent:
+          type: string
+        project_identifier:
+          type: string
+        lot_identifier:
+          type: string
+        train_identifier:
+          type: string
+
+    DocUnit:
+      allOf:
+        - $ref: "#/components/schemas/ObjectWithId"
+        - $ref: "#/components/schemas/CreateDocUnit"
+        - type: object
+          properties:
+            state:
+              $ref: "#/components/schemas/DocUnitState"
+            exportStatus:
+              $ref: "#/components/schemas/DocUnitExportStatus"
+            exportDate:
+              type: string
+              format: date
+            omekaExportStatus:
+              $ref: "#/components/schemas/DocUnitExportStatus"
+            omekaExportDate:
+              type: string
+              format: date
+            digLibExportStatus:
+              $ref: "#/components/schemas/DocUnitExportStatus"
+            condReportType:
+              $ref: "#/components/schemas/CondReportType"
+
+    DocUnitState:
+      type: string
+      enum: ["AVAILABLE","NOT_AVAILABLE","DELETED","CANCELED","CLOSED"]
+
+    DocUnitExportStatus:
+      type: string
+      enum: ["NONE", "IN_PROGRESS", "SENT", "FAILED"]
+
+    DocUnitRights:
+      type: string
+      enum: ["TO_CHECK", "FREE", "RESTRICTED", "RESTRICTED_WITH_AUTHORIZATION"]
+
+    CondReportType:
+      type: string
+      enum: ["MONO_PAGE", "MULTI_PAGE"]
+
+
+    ObjectWithErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type:
+              $ref: "#/components/schemas/Error"
+
+
+    Error:
+      type: object
+      properties:
+        error_code:
+          $ref: "#/components/schemas/ErrorCode"
+        field:
+          type: string
+        complements:
+          type: array
+          items:
+            type: string
+        additionalComplements: # TODO Realy WTH ???
+          type: array
+          items:
+            type: string
+        message:
+          type: string
+
+
+    ErrorCode:
+      type: string
+      enum:
+        - "AUTO_CHECK_TYPE_LABEL_MANDATORY"
+        - "CONDREPORT_DUPLICATE"
+        - "CONDREPORT_DETAIL_EMPTY"
+        - "CONDREPORT_DETAIL_MANDATORY"
+        - "CONDREPORT_DETAIL_DESC_EMPTY"
+        - "CONDREPORT_DETAIL_DESC_NO_VALUE_FOR_PROP"
+        - "CONDREPORT_DETAIL_DESC_BAD_VALUE"
+        - "CONDREPORT_DETAIL_DESC_DIMENSION"
+        - "CONF_CHECK_DEL_EXITS_LIB"
+        - "CONF_CHECK_DEL_EXITS_LOT"
+        - "CONF_CHECK_DEL_EXITS_PROJECT"
+        - "CONF_FTP_DEL_EXITS_LIB"
+        - "CONF_FTP_DEL_EXITS_LOT"
+        - "CONF_FTP_DEL_EXITS_PROJECT"
+        - "CONF_IA_LABEL_MANDATORY"
+        - "CONF_IA_LIBRARY_MANDATORY"
+        - "CONF_OMEKA_LABEL_MANDATORY"
+        - "CONF_OMEKA_LIBRARY_MANDATORY"
+        - "CONF_DIGITAL_LIBRARY_LABEL_MANDATORY"
+        - "CONF_DIGITAL_LIBRARY_LIBRARY_MANDATORY"
+        - "CONF_SFTP_LABEL_MANDATORY"
+        - "CONF_SFTP_LIBRARY_MANDATORY"
+        - "DATA_INTEGRITY_VIOLATION"
+        - "DELIVERY_DUPLICATE_LABEL"
+        - "DELIVERY_LOT_MANDATORY"
+        - "DELIVERY_NO_MATCHING_PREFIX"
+        - "DELIVERY_NO_MASTER_FOUND"
+        - "DELIVERY_NO_CHECK_CONFIGURATION_FOUND"
+        - "DELIVERY_NOT_ENOUGH_AVAILABLE_SPACE"
+        - "DELIVERY_WRONG_FOLDER"
+        - "DELIVERY_WRONG_FILE"
+        - "DESC_PROPERTY_DEL_EXISTS_DESC"
+        - "DESC_PROPERTY_LABEL_MANDATORY"
+        - "DESC_PROPERTY_TYPE_MANDATORY"
+        - "DESC_VALUE_DEL_EXISTS_DESC"
+        - "DESC_VALUE_LABEL_MANDATORY"
+        - "DESC_VALUE_PROPERTY_MANDATORY"
+        - "DOC_PROP_TYPE_DEL_USED_MAPPING"
+        - "DOC_PROP_TYPE_DEL_USED_PROP"
+        - "DOC_PROP_TYPE_LABEL_MANDATORY"
+        - "DOC_UNIT_DUPLICATE_PGCN_ID"
+        - "DOC_UNIT_IMAGERESOLUTION"
+        - "DOC_UNIT_IN_PROJECT"
+        - "DOC_UNIT_IN_ONGOING_LOT"
+        - "DOC_UNIT_LABEL_MANDATORY"
+        - "DOC_UNIT_PGCN_ID_MANDATORY"
+        - "DOC_UNIT_LIBRARY_MANDATORY"
+        - "DOC_UNIT_RIGHT_MANDATORY"
+        - "IMAGE_METADATA_CANT_PARSE"
+        - "IMAGE_METADATA_FIELDS_MANDATORY"
+        - "IMAGE_METADATA_PROPERTY_USED"
+        - "IMAGE_METADATA_SAME_PROPERTY_EXIST"
+        - "IMAGE_METADATA_NOT_EXIST"
+        - "LIBRARY_DEL_EXITS_DOCUNIT"
+        - "LIBRARY_DEL_EXITS_PROJ"
+        - "LIBRARY_DEL_EXITS_RECORD"
+        - "LIBRARY_DEL_EXITS_USER"
+        - "LIBRARY_DEL_EXITS_WGROUP"
+        - "LIBRARY_DEL_EXITS_WMODEL"
+        - "LIBRARY_DUPLICATE_NAME"
+        - "LIBRARY_IN_PROJECT"
+        - "LOT_DEL_EXITS_DELIVERY"
+        - "LOT_DEL_EXITS_DOCUNIT"
+        - "LOT_DUPLICATE_LABEL"
+        - "MAPPING_LABEL_MANDATORY"
+        - "MAPPING_LIBRARY_MANDATORY"
+        - "MAPPING_RULE_LABEL_MANDATORY"
+        - "MAPPING_RULE_PGCNID_MANDATORY"
+        - "MAPPING_RULE_RIGHTS_MANDATORY"
+        - "MAPPING_RULE_FIELD_MANDATORY"
+        - "MAPPING_TYPE_MANDATORY"
+        - "PROJECT_DEL_EXITS_DOCUNITS"
+        - "PROJECT_DEL_EXITS_LOTS"
+        - "PROJECT_DEL_EXITS_TRAINS"
+        - "PROJECT_DUPLICATE_NAME"
+        - "RECORD_LANGUAGE_UNKNOWN"
+        - "REPORT_GENERATION"
+        - "ROLE_DEL_EXITS_LIB"
+        - "ROLE_DEL_EXITS_USER"
+        - "TPL_DUPLICATE"
+        - "TPL_LIBRARY_MANDATORY"
+        - "TPL_NAME_MANDATORY"
+        - "USER_DEL_EXITS_PROJ"
+        - "USER_DEL_EXITS_LOT"
+        - "USER_DUPLICATE_LOGIN"
+        - "USER_EMAIL_INVALID"
+        - "USER_EMAIL_MANDATORY"
+        - "USER_LIBRARY_MANDATORY"
+        - "USER_LOGIN_MANDATORY"
+        - "USER_ROLE_CODE_MANDATORY"
+        - "USER_ROLE_LABEL_MANDATORY"
+        - "USER_ROLE_MANDATORY"
+        - "USER_ROLE_UNIQUE_CODE_VIOLATION"
+        - "USER_ROLE_UNIQUE_LABEL_VIOLATION"
+        - "USER_IN_WORKFLOW_GROUP"
+        - "WORKFLOW_GROUP_NAME_MANDATORY"
+        - "WORKFLOW_GROUP_DUPLICATE_NAME"
+        - "WORKFLOW_GROUP_MIXED_USERS"
+        - "WORKFLOW_GROUP_IS_IN_FUTURE_STATE"
+        - "WORKFLOW_MODEL_MISSING"
+        - "WORKFLOW_MODEL_NAME_MANDATORY"
+        - "WORKFLOW_MODEL_STATE_GROUP_MANDATORY"
+        - "WORKFLOW_MODEL_DUPLICATE_NAME"
+        - "WORKFLOW_MODEL_DEL_EXITS_DOC"
+        - "WORKFLOW_MODEL_DEL_EXITS_LOT"
+        - "WORKFLOW_MODEL_DEL_EXITS_PROJ"
+        - "WORKFLOW_PROCESS_NO_RIGHTS"
+        - "WORKFLOW_LOT_DOCUNIT_MISSING"
+        - "Z3950SERVER_NAME_MANDATORY"
+        - "Z3950SERVER_UNIQUE_NAME_VIOLATION"
+        - "Z3950_CONNECTION_FAILURE"
+        - "Z3950_SEARCH_FAILURE"
