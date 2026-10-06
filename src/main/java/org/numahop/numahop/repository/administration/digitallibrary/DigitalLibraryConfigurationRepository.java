@@ -10,6 +10,10 @@ import org.springframework.data.jpa.repository.Query;
 public interface DigitalLibraryConfigurationRepository
 		extends JpaRepository<DigitalLibraryConfiguration, String>, DigitalLibraryConfigurationRepositoryCustom {
 
+	@Query("""
+			select conf from DigitalLibraryConfiguration conf
+			where conf.library.identifier = ?1
+			""")
 	Set<DigitalLibraryConfiguration> findByLibrary(String libraryId);
 
 	Set<DigitalLibraryConfiguration> findByLibraryAndActive(Library library, boolean active);

@@ -113,7 +113,8 @@ public abstract class AbstractEsRepository<T> {
 				}
 				final LocalDate to = from.plusDays(1);
 
-				return QueryBuilders.range(b -> b.field(field).gte(JsonData.of(from)).lt(JsonData.of(to)));
+				return QueryBuilders
+					.range(b -> b.untyped(u -> u.field(field).gte(JsonData.of(from)).lt(JsonData.of(to))));
 
 			}).filter(Objects::nonNull).forEach(builder::should);
 

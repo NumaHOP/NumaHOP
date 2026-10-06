@@ -72,8 +72,8 @@ public class HttpServiceStartupValidator implements InitializingBean {
 			final long beginTime = System.currentTimeMillis();
 			final long deadLine = beginTime + TimeUnit.SECONDS.toMillis(this.timeout);
 
-			final RestTemplate restTemplate = new RestTemplateBuilder().setConnectTimeout(Duration.ofSeconds(interval))
-				.setReadTimeout(Duration.ofSeconds(interval))
+			final RestTemplate restTemplate = new RestTemplateBuilder().connectTimeout(Duration.ofSeconds(interval))
+				.readTimeout(Duration.ofSeconds(interval))
 				.build();
 
 			while (!validated && System.currentTimeMillis() < deadLine) {

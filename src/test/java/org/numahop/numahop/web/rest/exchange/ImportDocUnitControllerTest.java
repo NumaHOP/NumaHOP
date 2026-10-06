@@ -58,7 +58,8 @@ public class ImportDocUnitControllerTest {
 				TestConverterFactory.getConverter(ImportReport.class));
 		this.restMockMvc = MockMvcBuilders.standaloneSetup(controller).setConversionService(convService).build();
 
-		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any(String[].class)))
+			.thenReturn(true);
 	}
 
 	@Test

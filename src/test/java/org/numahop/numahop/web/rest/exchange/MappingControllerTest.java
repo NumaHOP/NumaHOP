@@ -66,7 +66,8 @@ public class MappingControllerTest {
 	public void testCreate() throws Exception {
 		final Mapping mapping = getMapping("ABCD-1234");
 		when(mappingService.save(any(Mapping.class))).thenReturn(mapping);
-		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any(String[].class)))
+			.thenReturn(true);
 
 		this.restMockMvc
 			.perform(post("/api/rest/mapping").contentType(MediaType.APPLICATION_JSON)
@@ -86,7 +87,8 @@ public class MappingControllerTest {
 		final String identifier = mapping.getIdentifier();
 
 		when(mappingService.findOne(mapping.getIdentifier())).thenReturn(mapping);
-		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any(String[].class)))
+			.thenReturn(true);
 
 		// test delete
 		this.restMockMvc
@@ -102,7 +104,8 @@ public class MappingControllerTest {
 		final Set<MappingDTO> mappings = new HashSet<>();
 		mappings.add(getSimpleMappingDto("ABCD-1236"));
 
-		when(libraryAccesssHelper.filterObjectsByLibrary(any(HttpServletRequest.class), any(), any(), any()))
+		when(libraryAccesssHelper.filterObjectsByLibrary(any(HttpServletRequest.class), any(), any(),
+				any(String[].class)))
 			.thenAnswer(new ReturnsArgumentAt(1));
 
 		when(mappingService.findByType(Mapping.Type.MARC)).thenReturn(mappings);
@@ -140,7 +143,8 @@ public class MappingControllerTest {
 	public void getById() throws Exception {
 		final Mapping mapping = getMapping("ABCD-1238");
 		when(mappingService.findOne(mapping.getIdentifier())).thenReturn(mapping);
-		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any(String[].class)))
+			.thenReturn(true);
 
 		// test findAllActive
 		this.restMockMvc
@@ -173,7 +177,8 @@ public class MappingControllerTest {
 
 		when(mappingService.findOne(mapping.getIdentifier())).thenReturn(mapping);
 		when(mappingService.save(mapping)).thenReturn(savedStat);
-		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any())).thenReturn(true);
+		when(libraryAccesssHelper.checkLibrary(any(HttpServletRequest.class), any(), any(), any(String[].class)))
+			.thenReturn(true);
 
 		// test update
 		this.restMockMvc

@@ -10,6 +10,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
 import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.TextQueryType;
+import co.elastic.clients.elasticsearch._types.query_dsl.UntypedRangeQuery;
 import co.elastic.clients.json.JsonData;
 import org.numahop.numahop.service.es.EsConstant;
 import jakarta.persistence.metamodel.Attribute;
@@ -80,7 +81,7 @@ public class EsQueryHelper {
 	 */
 	public static Query getRangeQueryBuilder(final String field, final String search) {
 		final String[] range = search.split(":");
-		final RangeQuery.Builder queryBuilder = QueryBuilders.range().field(field);
+		final UntypedRangeQuery.Builder queryBuilder = new UntypedRangeQuery.Builder().field(field);
 		// borne inférieure
 		if (range.length > 0 && StringUtils.isNotBlank(range[0])) {
 			queryBuilder.gte(JsonData.of(range[0]));
@@ -89,7 +90,7 @@ public class EsQueryHelper {
 		if (range.length > 1 && StringUtils.isNotBlank(range[1])) {
 			queryBuilder.lte(JsonData.of(range[1]));
 		}
-		return queryBuilder.build()._toQuery();
+		return RangeQuery.of(b -> b.untyped(queryBuilder.build()))._toQuery();
 	}
 
 	private static MatchQuery.Builder getMatchQueryBuilder(final String field, final String search,

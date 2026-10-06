@@ -230,7 +230,7 @@ public class EsDocUnitRepositoryImpl extends AbstractEsRepository<EsDocUnit> imp
 				}
 				else {
 					builder.should(
-							QueryBuilders.range().field("nbDigitalDocuments").gt(JsonData.of(0)).build()._toQuery());
+							QueryBuilders.range(b -> b.untyped(u -> u.field("nbDigitalDocuments").gt(JsonData.of(0)))));
 				}
 				break;
 			case "workflowState":
