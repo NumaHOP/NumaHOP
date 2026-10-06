@@ -1,6 +1,6 @@
 {
     "name": "NumaHOP",
-    "version": "26.03",
+    "version": "26.09",
     "private": true,
     "scripts": {
         "check": "prettier --check \"src/**/*.{json,yml,html,cjs,mjs,js,ts,tsx,css,scss,xml}\"",
