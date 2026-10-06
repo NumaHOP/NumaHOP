@@ -4,12 +4,34 @@ All changes to this project should be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to calendar versioning as of 26.03 with bianual releases (yy.03 and yy.09).
-## [Unreleased] 26.09
+## [Unreleased] 27.03
 
 ### Added
 ### Changed 
 ### Removed
 ### Fixed
+### Breaking changes
+
+## [26.09]
+
+### Added
+
+- Added a new habilitation for the admin tools to be used by any user having the habilitation on his profile.
+- Added an `exec` sub rule for docker in the `justfile`.
+
+### Changed 
+
+- Renamed the java package id from `fr.progilone` to `org.numahop` rename the artifact id from `pgcn` to `numahop`.
+- Changed the way the yaz4j is bundled for java. Now only the `libyaz5` package is needed on the server for Z39.50 to work.
+- Updated the SpringBoot dependency from 3.0.2 to 3.5.16.
+
+### Removed
+
+### Fixed
+
+- The default configuration for numahop exposed unsafe actuators endpoints by default. Those were disabled in the default config.
+- Minor fixes in the `justfile`
+
 ### Breaking changes
 
 ## [26.03]
@@ -56,6 +78,7 @@ The CINES mail parsing functionality was reworked to follow changes due to the m
 
 Last version released by TECH'Advantage.
 
-[Unreleased]: https://github.com/numahop/numahop/compare/26.03..HEAD
+[Unreleased]: https://github.com/numahop/numahop/compare/26.09..HEAD
+[26.09]: https://github.com/numahop/numahop/tree/26.09
 [26.03]: https://github.com/numahop/numahop/tree/26.03
 [2.3.1]: https://github.com/numahop/numahop/tree/2.3.1
