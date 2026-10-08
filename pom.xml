@@ -619,7 +619,7 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <!-- Allows to print compilation errors. -->
-                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                    <forceLegacyJavacApi>true</forceLegacyJavacApi>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>com.querydsl</groupId>

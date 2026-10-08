@@ -15,7 +15,7 @@ public interface BinaryRepository extends JpaRepository<StoredFile, String> {
 	@Query("""
 			select sf from StoredFile sf
 			left join fetch sf.page p
-			where p.identifier in ?1 and sf.fileFormat = ?2 and p.number != null
+			where p.identifier in ?1 and sf.fileFormat = ?2 and p.number is not null
 			order by p.number
 			""")
 	List<StoredFile> getAllByPageIdentifiersAndFileFormat(List<String> pageIdentifier,
@@ -25,7 +25,7 @@ public interface BinaryRepository extends JpaRepository<StoredFile, String> {
 			select sf from StoredFile sf
 			left join fetch sf.page p
 			left join fetch p.digitalDocument
-			where p.identifier in ?1 and sf.fileFormat = ?2 and p.number != null
+			where p.identifier in ?1 and sf.fileFormat = ?2 and p.number is not null
 			order by p.number
 			""")
 	List<StoredFile> getAllWithDocByPageIdentifiersAndFileFormat(List<String> pageIdentifier,

@@ -14,7 +14,7 @@ public interface DocPageRepository extends JpaRepository<DocPage, String> {
 
 	@Query("""
 			select p from DocPage p
-			where p.number!=null and p.digitalDocument.identifier = ?1
+			where p.number is not null and p.digitalDocument.identifier = ?1
 			""")
 	List<DocPage> getAllByDigitalDocumentIdentifier(String digitalDocumentIdentifier);
 
@@ -26,7 +26,7 @@ public interface DocPageRepository extends JpaRepository<DocPage, String> {
 
 	@Query("""
 			select p from DocPage p
-			where p.number!=null and p.sample.identifier = ?1
+			where p.number is not null and p.sample.identifier = ?1
 			""")
 	List<DocPage> getAllBySampleIdentifier(String sampleIdentifier);
 

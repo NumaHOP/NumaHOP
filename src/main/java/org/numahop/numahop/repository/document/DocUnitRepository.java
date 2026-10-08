@@ -226,14 +226,14 @@ public interface DocUnitRepository extends JpaRepository<DocUnit, String>, DocUn
 	@Query("""
 			select distinct d.identifier from DocUnit d
 			left join d.workflow w
-			where d.archivable = true and w != null and d.library.identifier = ?1
+			where d.archivable = true and w is not null and d.library.identifier = ?1
 			""")
 	List<String> findDocUnitByLibraryForCinesExport(String libraryId);
 
 	@Query("""
 			select distinct d.identifier from DocUnit d
 			left join d.workflow w
-			where d.distributable = true and w != null and d.library.identifier in ?1
+			where d.distributable = true and w is not null and d.library.identifier in ?1
 			""")
 	List<String> findByLibraryWithOmekaExportDep(String libraryId);
 

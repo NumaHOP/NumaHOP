@@ -22,7 +22,7 @@ public interface DigitalDocumentRepository
 	@Query("""
 			select dd from DigitalDocument dd
 			left join fetch dd.pages pg
-			where pg.number != null and dd.identifier = ?1
+			where pg.number is not null and dd.identifier = ?1
 			""")
 	DigitalDocument getOneWithPages(String identifier);
 
@@ -30,7 +30,7 @@ public interface DigitalDocumentRepository
 			select dd from DigitalDocument dd
 			left join fetch dd.pages pg
 			left join fetch dd.docUnit du
-			where pg.number != null and dd.identifier = ?1
+			where pg.number is not null and dd.identifier = ?1
 			""")
 	DigitalDocument getOneWithDocUnitAndPages(String identifier);
 
@@ -38,7 +38,7 @@ public interface DigitalDocumentRepository
 			select dd from DigitalDocument dd
 			left join fetch dd.pages pg
 			left join fetch dd.physicalDocuments pd
-			where pg.number != null and dd.identifier = ?1
+			where pg.number is not null and dd.identifier = ?1
 			""")
 	DigitalDocument getOneWithPagesAndPhysical(String identifier);
 
