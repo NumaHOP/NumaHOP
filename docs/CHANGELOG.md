@@ -10,6 +10,9 @@ and this project adheres to calendar versioning as of 26.03 with bianual release
 ### Changed 
 ### Removed
 ### Fixed
+
+- Fixed the dashboard widgets that could no longer be moved or edited: the `sortablejs` dependency of the dashboard framework was missing.
+
 ### Breaking changes
 
 ## [26.09]
