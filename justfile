@@ -80,7 +80,7 @@ build target='all':
 
 alias d := docker
 # Short hands to manage the docker composition
-# [arg('image', pattern='all|env|nh|db|es|mail', help="env corresponds to db + es + mail and all to env + nh")]
+# [arg('image', pattern='all|env|nh|db|es|mail|sftp', help="env corresponds to db + es + mail + sftp and all to env + nh")]
 # [arg('action', pattern='ps|top|down|up|clean|stop|logs|shell|reset')]
 docker action='ps' image='all' extra='':
 	@case '{{action}}' in \
@@ -92,11 +92,11 @@ docker action='ps' image='all' extra='':
 		'clean') docker compose -p numahop -f src/main/docker/docker-compose.{{image}}.yml rm -f -s -v;; \
 		'stop') docker compose -p numahop -f src/main/docker/docker-compose.{{image}}.yml stop;; \
 		'logs') docker compose -p numahop -f src/main/docker/docker-compose.{{image}}.yml logs -f;; \
-		'shell') [[ "i-nh i-db i-es i-mail" == *"i-{{image}}"* ]] && \
+		'shell') [[ "i-nh i-db i-es i-mail i-sftp" == *"i-{{image}}"* ]] && \
 			docker compose -p numahop -f src/main/docker/docker-compose.{{image}}.yml exec numahop-{{image}} bash;; \
-		'reset') [[ "i-nh i-db i-es" == *"i-{{image}}"* ]] && \
+		'reset') [[ "i-nh i-db i-es i-sftp" == *"i-{{image}}"* ]] && \
 			docker compose -p numahop -f src/main/docker/docker-compose.{{image}}.yml rm -f -s -v; \
 			docker volume rm numahop_numahop-{{image}}-volume;; \
-		'exec') [[ "i-nh i-db i-es i-mail" == *"i-{{image}}"* ]] && \
+		'exec') [[ "i-nh i-db i-es i-mail i-sftp" == *"i-{{image}}"* ]] && \
 			docker compose -p numahop -f src/main/docker/docker-compose.{{image}}.yml exec numahop-{{image}} {{extra}};; \
 	esac\

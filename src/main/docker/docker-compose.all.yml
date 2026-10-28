@@ -3,3 +3,4 @@ include:
     - ./docker-compose.es.yml
     - ./docker-compose.db.yml
     - ./docker-compose.mail.yml
+    - ./docker-compose.sftp.yml
