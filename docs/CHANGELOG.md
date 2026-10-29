@@ -7,6 +7,8 @@ and this project adheres to calendar versioning as of 26.03 with bianual release
 ## [Unreleased] 27.03
 
 ### Added
+
+- Added an SFTP server (`numahop-sftp`) to the docker composition to test deliveries and SFTP exports. It is part of `env` and `all`, and its `delivery` folder is mounted in `numahop-nh` at `/opt/pgcn/delivery`.
 ### Changed 
 ### Removed
 ### Fixed

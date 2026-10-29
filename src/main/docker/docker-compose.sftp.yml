@@ -1,0 +1,26 @@
+# SFTP server standing in for the digitization provider's drop zone.
+#   - login: numahop / numahop, from the host on port 2222, from the composition on numahop-sftp:22
+#   - sessions start in /delivery, shared with numahop-nh at /opt/pgcn/delivery: use it as the
+#     delivery folder of the library FTP configuration, and upload each delivery in a sub folder.
+#   - Host keys persist across container restarts via the numahop-sftp-ssh-hostkeys volume.
+#     To use a custom host key (e.g., for production), mount your host key files to /etc/ssh
+#     in the container. Example: add "- ./prod-ssh-host-keys/ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key:ro"
+services:
+    numahop-sftp:
+        image: atmoz/sftp:debian
+        volumes:
+            - numahop-sftp-volume:/home/numahop/delivery
+            - ./sftp/init.sh:/etc/sftp.d/init.sh:ro
+            - numahop-sftp-ssh-hostkeys:/etc/ssh
+        networks:
+            - numahop
+        ports:
+            - '2222:22'
+        # user:password:uid:gid, the uid matches the numahop user of the numahop-nh image
+        command: numahop:numahop:185:185
+
+networks:
+    numahop:
+volumes:
+    numahop-sftp-volume:
+    numahop-sftp-ssh-hostkeys:
