@@ -1,6 +1,11 @@
 services:
     numahop-nh:
         image: numahop
+        # Built by jib (just b docker) or, when only docker is installed, from the Dockerfile with --build.
+        build:
+            context: ../../..
+            dockerfile: src/main/docker/Dockerfile
+            target: app
         volumes:
             - numahop-nh-volume:/opt/pgcn/
             - numahop-sftp-volume:/opt/pgcn/delivery
