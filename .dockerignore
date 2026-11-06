@@ -1,0 +1,17 @@
+# Keeps the docker build context small: only sources are needed by src/main/docker/Dockerfile.
+.git
+.github
+.husky
+.idea
+.vscode
+.settings
+.tmp
+.npm
+docs
+node
+node_modules
+target
+src/main/webapp/dist
+src/main/docker
+*.iml
+*.log

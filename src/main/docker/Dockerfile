@@ -29,15 +29,27 @@ RUN mkdir -p /opt/pgcn \
 
 USER ${DOCKER_USER_ID}:${DOCKER_GROUP_ID}
 
-# build image
-FROM base AS build
+# build image: compiles the front end and the back end, only needs docker on the host.
+# The build context is the root of the repository (see the .dockerignore there).
+FROM eclipse-temurin:17-jdk AS build
 
-RUN apt-get update \
- && apt-get install -y openjdk-17-jdk-headless maven bzip2 \
- && apt-get install -y ruby-dev ruby-ffi \
- && apt-get clean \
- && gem install compass
+WORKDIR /src
 
-ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64
+COPY . .
 
-USER ${DOCKER_USER_ID}:${DOCKER_GROUP_ID}
+# Maven, npm and node downloads are kept in BuildKit caches between builds.
+RUN --mount=type=cache,target=/root/.m2 \
+    --mount=type=cache,target=/src/.npm \
+    ./mvnw -B package -Dfast -DskipTests \
+ && cp target/numahop-*.jar /numahop.jar
+
+# app image: the build image output on top of the run image, same settings as the jib image.
+FROM run AS app
+
+COPY --from=build --chown=${DOCKER_USER_ID}:${DOCKER_GROUP_ID} /numahop.jar /app/numahop.jar
+
+ENV SPRING_OUTPUT_ANSI_ENABLED ALWAYS
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-XX:+HeapDumpOnOutOfMemoryError", "-XX:+ExitOnOutOfMemoryError", "-XX:MaxRAMPercentage=60.0", "-jar", "/app/numahop.jar"]

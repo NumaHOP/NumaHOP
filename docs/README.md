@@ -50,6 +50,17 @@ Build dependency list (optional but recommended for optimal developpement):
 - npm (optional)
 
 The installation manual can be found at this url: [https://numahop.github.io/Documentation/install/index.html](https://numahop.github.io/Documentation/developper_manual/install/index.html)
+
+### Quick start with docker only
+
+With only docker (and its compose plugin) installed, build NumaHOP and start the whole composition (NumaHOP, MariaDB, ElasticSearch, mail and SFTP servers) from the root of the repository:
+
+```sh
+docker compose -p numahop -f src/main/docker/docker-compose.all.yml up -d --build
+```
+
+NumaHOP is then available at http://localhost:8080. The first build downloads the maven and npm dependencies and takes a while; later builds reuse them. Drop `--build` to start the composition without rebuilding the image.
+
 ## Project Actors
 
 ### Original Specification Redactors

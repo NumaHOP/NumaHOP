@@ -78,7 +78,8 @@ alias b := build
 # - front only runs the frontend build.
 # - back compiles only the backend without tests and the front-end the backend .
 # - docker compiles numahop and creates the docker image.
-# [arg('target', pattern='all|front|back|docker')]
+# - bootstrap creates the docker image with docker only (no java, maven or node needed).
+# [arg('target', pattern='all|front|back|docker|bootstrap')]
 build target='all':
 	#!/usr/bin/env bash
 	case '{{target}}' in
@@ -86,6 +87,7 @@ build target='all':
 		'front') npx grunt build --force;;
 		'back') mvn package -Dfast=true -Dskip-front-end=true -DskipTests;;
 		'docker') mvn package -Dfast -Pdocker,webapp;;
+		'bootstrap') docker compose -p numahop -f src/main/docker/docker-compose.nh.yml build;;
 	esac
 
 alias d := docker
