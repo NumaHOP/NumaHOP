@@ -6,6 +6,10 @@ default: info
 # Get the MVN_ARGS so that maven respect it inside this file.
 export MAVEN_ARGS := env('MAVEN_ARGS', '')
 
+# Name of the docker compose project, override it to keep several compositions apart.
+# The compositions share the host ports, so only one of them can run at a time.
+project := env('COMPOSE_PROJECT_NAME', 'numahop')
+
 # Print information
 info:
 	@echo -e "Binaries:"
@@ -14,7 +18,8 @@ info:
 	@echo -e "\tfound docker binary: $(which docker)"
 	@echo ""
 	@echo -e "Environement:"
-	@echo -e "\tMaven extra args: $MVN_ARGS"
+	@echo -e "\tMaven extra args: $MAVEN_ARGS"
+	@echo -e "\tDocker compose project name: {{project}}"
 	@echo ""
 
 alias f := format
@@ -87,7 +92,7 @@ build target='all':
 		'front') npx grunt build --force;;
 		'back') mvn package -Dfast=true -Dskip-front-end=true -DskipTests;;
 		'docker') mvn package -Dfast -Pdocker,webapp;;
-		'bootstrap') docker compose -p numahop -f src/main/docker/docker-compose.nh.yml build;;
+		'bootstrap') docker compose -p {{project}} -f src/main/docker/docker-compose.nh.yml build;;
 	esac
 
 alias d := docker
@@ -98,18 +103,18 @@ docker action='ps' image='all' extra='':
 	#!/usr/bin/env bash
 	case '{{action}}' in
 		'setup') docker build -t numahop-run src/main/docker --target run ;;
-		'ps') docker compose -p numahop ps ;;
-		'top') docker compose -p numahop top ;;
-		'down') docker compose -p numahop -f src/main/docker/docker-compose.{{image}}.yml rm -f -s;;
-		'up') docker compose -p numahop -f src/main/docker/docker-compose.{{image}}.yml up -d;;
-		'clean') docker compose -p numahop -f src/main/docker/docker-compose.{{image}}.yml rm -f -s -v;;
-		'stop') docker compose -p numahop -f src/main/docker/docker-compose.{{image}}.yml stop;;
-		'logs') docker compose -p numahop -f src/main/docker/docker-compose.{{image}}.yml logs -f;;
+		'ps') docker compose -p {{project}} ps ;;
+		'top') docker compose -p {{project}} top ;;
+		'down') docker compose -p {{project}} -f src/main/docker/docker-compose.{{image}}.yml rm -f -s;;
+		'up') docker compose -p {{project}} -f src/main/docker/docker-compose.{{image}}.yml up -d;;
+		'clean') docker compose -p {{project}} -f src/main/docker/docker-compose.{{image}}.yml rm -f -s -v;;
+		'stop') docker compose -p {{project}} -f src/main/docker/docker-compose.{{image}}.yml stop;;
+		'logs') docker compose -p {{project}} -f src/main/docker/docker-compose.{{image}}.yml logs -f;;
 		'shell') [[ "i-nh i-db i-es i-mail i-sftp" == *"i-{{image}}"* ]] &&
-			docker compose -p numahop -f src/main/docker/docker-compose.{{image}}.yml exec numahop-{{image}} bash;;
+			docker compose -p {{project}} -f src/main/docker/docker-compose.{{image}}.yml exec numahop-{{image}} bash;;
 		'reset') [[ "i-nh i-db i-es i-sftp" == *"i-{{image}}"* ]] &&
-			docker compose -p numahop -f src/main/docker/docker-compose.{{image}}.yml rm -f -s -v;
-			docker volume rm numahop_numahop-{{image}}-volume;;
+			docker compose -p {{project}} -f src/main/docker/docker-compose.{{image}}.yml rm -f -s -v;
+			docker volume rm {{project}}_numahop-{{image}}-volume;;
 		'exec') [[ "i-nh i-db i-es i-mail i-sftp" == *"i-{{image}}"* ]] &&
-			docker compose -p numahop -f src/main/docker/docker-compose.{{image}}.yml exec numahop-{{image}} {{extra}};;
+			docker compose -p {{project}} -f src/main/docker/docker-compose.{{image}}.yml exec numahop-{{image}} {{extra}};;
 	esac

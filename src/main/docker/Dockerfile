@@ -1,12 +1,12 @@
 # base image
 FROM eclipse-temurin:17-jre AS base
 
-ENV DOCKER_USER_ID 185
-ENV DOCKER_GROUP_ID $DOCKER_USER_ID
+ENV DOCKER_USER_ID=185
+ENV DOCKER_GROUP_ID=$DOCKER_USER_ID
 
-ENV DOCKER_USER_NAME numahop
-ENV DOCKER_GROUP_NAME $DOCKER_USER_NAME
-ENV DOCKER_USER_HOME /home/$DOCKER_USER_NAME
+ENV DOCKER_USER_NAME=numahop
+ENV DOCKER_GROUP_NAME=$DOCKER_USER_NAME
+ENV DOCKER_USER_HOME=/home/$DOCKER_USER_NAME
 
 RUN groupadd -r "$DOCKER_GROUP_NAME" -g "$DOCKER_GROUP_ID" \
  && useradd -r -u "$DOCKER_USER_ID" -g "$DOCKER_GROUP_ID" -m -d "$DOCKER_USER_HOME" -s /sbin/nologin "$DOCKER_USER_NAME" \
@@ -16,10 +16,10 @@ RUN apt-get update \
  && apt-get install -y tesseract-ocr imagemagick libimage-exiftool-perl libyaz5 \
  && apt-get clean
 
-ENV IMAGEMAGICK_CONVERT_PATH /usr/bin/convert
-ENV IMAGEMAGICK_IDENTIFY_PATH /usr/bin/identify
-ENV EXIFTOOL_PATH /usr/bin/exiftool
-ENV TESSERACT_PATH /usr/bin/tesseract
+ENV IMAGEMAGICK_CONVERT_PATH=/usr/bin/convert
+ENV IMAGEMAGICK_IDENTIFY_PATH=/usr/bin/identify
+ENV EXIFTOOL_PATH=/usr/bin/exiftool
+ENV TESSERACT_PATH=/usr/bin/tesseract
 
 # run image
 FROM base AS run
@@ -48,7 +48,7 @@ FROM run AS app
 
 COPY --from=build --chown=${DOCKER_USER_ID}:${DOCKER_GROUP_ID} /numahop.jar /app/numahop.jar
 
-ENV SPRING_OUTPUT_ANSI_ENABLED ALWAYS
+ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
 
 EXPOSE 8080
 

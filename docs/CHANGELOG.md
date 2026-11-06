@@ -11,6 +11,9 @@ and this project adheres to calendar versioning as of 26.03 with bianual release
 - Added an SFTP server (`numahop-sftp`) to the docker composition to test deliveries and SFTP exports. It is part of `env` and `all`, and its `delivery` folder is mounted in `numahop-nh` at `/opt/pgcn/delivery`.
 - Added a docker-only build: the `numahop-nh` image can be built from `src/main/docker/Dockerfile` (target `app`) without java, maven or node on the host, with `docker compose ... up --build` or `just b bootstrap`. The jib build is unchanged.
 ### Changed 
+
+- The docker compose project used by the `justfile` can be overridden with `COMPOSE_PROJECT_NAME` (or `just project=<name> ...`), it defaults to `numahop`.
+
 ### Removed
 ### Fixed
 
