@@ -13,7 +13,7 @@ RUN groupadd -r "$DOCKER_GROUP_NAME" -g "$DOCKER_GROUP_ID" \
  && chmod 0770 "$DOCKER_USER_HOME"
 
 RUN apt-get update \
- && apt-get install -y tesseract-ocr imagemagick libimage-exiftool-perl libyaz5 \
+ && apt-get install -y tesseract-ocr imagemagick libimage-exiftool-perl libyaz5 --no-install-recommends\
  && apt-get clean
 
 ENV IMAGEMAGICK_CONVERT_PATH=/usr/bin/convert
