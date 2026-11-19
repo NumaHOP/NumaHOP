@@ -1,0 +1,19 @@
+useOptional: true
+useSpringBoot3: true
+
+skipDefaultInterface: true
+
+interfaceOnly: true
+
+apiPackage: fr.numahop
+
+artifactId: api
+
+basePackage: fr.numahop.api
+
+documentationProvider: springdoc
+
+additionalModelTypeAnnotations: |
+  @lombok.Data 
+  @lombok.AllArgsConstructor
+  @lombok.RequiredArgsConstructor
